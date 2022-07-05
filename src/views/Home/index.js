@@ -1,6 +1,18 @@
+// Export components my files
 import banner from '../../assets/images/bg_banner.png'
+import "flatpickr/dist/themes/material_green.css";
+
+
+import Flatpickr from "react-flatpickr";
+import { useState } from 'react';
+
+import { Spanish} from 'flatpickr/dist/l10n/es.js'; // configure language for flatpickr
 
 const Home = () => {
+    
+    const [state, setstate] = useState(new Date());
+    const [dateEnd, setDateEnd] = useState(new Date());
+
     return (
         <>
             <header style={
@@ -13,7 +25,7 @@ const Home = () => {
                 }
             }>
                 <div className='container mx-auto'>
-                    <h2>VUELOS</h2>
+                    <h1>VUELOS</h1>
                 </div>
             </header>
             <section className='p-lg'>
@@ -29,11 +41,29 @@ const Home = () => {
                                 <span className='message-error'>Campo obligatorio</span>
                             </div>
                             <div className='form-group'>
-                                <input className='form-control' type='text' />
+                                <Flatpickr
+                                    className='form-control'
+                                    value={state}
+                                    options={{
+                                        enableTime: false,
+                                        dateFormat: "l, d M",
+                                        locale: Spanish
+                                    }}
+                                    onChange={(setstate) => console.log(setstate)}
+                                />
                                 <span className='message-error'>Campo obligatorio</span>
                             </div>
                             <div className='form-group'>
-                                <input className='form-control' type='text' />
+                                <Flatpickr
+                                    className='form-control'
+                                    value={dateEnd}
+                                    options={{
+                                        enableTime: false,
+                                        dateFormat: "l, d M",
+                                        locale: Spanish
+                                    }}
+                                    onChange={(setDateEnd) => console.log(setDateEnd)}
+                                />
                                 <span className='message-error'>Campo obligatorio</span>
                             </div>
                             <div className='form-group col-span-2 text-right'>

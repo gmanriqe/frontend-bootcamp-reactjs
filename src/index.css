@@ -46,6 +46,7 @@ code {
     background-image: none;
     border: 1px solid var(--control-form-color);
     border-radius: 0.25rem;
+    padding: 0 0.625rem;
     height: 42px;
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
