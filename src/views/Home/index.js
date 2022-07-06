@@ -1,33 +1,20 @@
-// Export components my files
-import banner from '../../assets/images/bg_banner.png'
 import "flatpickr/dist/themes/material_green.css";
-
 
 import Flatpickr from "react-flatpickr";
 import { useState } from 'react';
 
-import { Spanish} from 'flatpickr/dist/l10n/es.js'; // configure language for flatpickr
+import { Spanish } from 'flatpickr/dist/l10n/es.js'; // configure language for flatpickr
+import { Banner } from "../../components/Banner";
+import { Paises } from "../../mock/Country";
 
 const Home = () => {
-    
+
     const [state, setstate] = useState(new Date());
     const [dateEnd, setDateEnd] = useState(new Date());
 
     return (
         <>
-            <header style={
-                {
-                    backgroundImage: `url(${banner})`,
-                    backgroundRepeat: 'no-repeat',
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center',
-                    height: '380px',
-                }
-            }>
-                <div className='container mx-auto'>
-                    <h1>VUELOS</h1>
-                </div>
-            </header>
+            <Banner title="VUELOS AEREOS" />
             <section className='p-lg'>
                 <div className='container mx-auto'>
                     <div className='card p-sm'>
