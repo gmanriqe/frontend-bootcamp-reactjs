@@ -40,8 +40,11 @@ module.exports = {
             md: '32px',
             lg: '64px',
         },
-        extend: {}
-    },
-    variants: {},
-    plugins: []
+        container: {
+            padding: '15px'
+        },
+        extend: {},
+        variants: {},
+        plugins: []
+    }
 }
