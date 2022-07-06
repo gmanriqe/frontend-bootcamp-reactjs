@@ -78,7 +78,7 @@ const Home = () => {
     return (
         <>
             <Banner title='VUELOS AEREOS' />
-            <section className='p-lg'>
+            <section className='pt-lg'>
                 <div className='container mx-auto'>
                     <div className='card p-sm'>
                         <form className='grid grid-cols-1 lg:grid-cols-2 gap-4' onSubmit={handlerSubmitMainSearch} >
