@@ -5,56 +5,67 @@ export const Paises = [
         "code": "CWB",
         "name": "Afonso Pena Airport",
         "countryName" : "Brazil",
+        "state":"1"
     },
     {
         "code": "CUZ",
         "name": "Alejandro Velasco Astete International Airport",
         "countryName" : "Peru",
+        "state":"1"
     },
     {
         "code": "MVD",
         "name": "Carrasco International /General C L Berisso Airport",
         "countryName" : "Uruguay",
+        "state":"1"
     },
     {
         "code": "SCL",
         "name": "Comodoro Arturo Merino Benítez International Airport",
         "countryName" : "Chile",
+        "state":"1"
     },
     {
         "code": "CGH",
         "name": "São Paulo–Congonhas Airport",
         "countryName" : "Brazil",
+        "state":"1"
     },
     {
         "code": "LTX",
         "name": "Cotopaxi International Airport",
         "countryName" : "Ecuador",
+        "state":"1"
     },
     {
         "code": "SSA",
         "name": "Deputado Luiz Eduardo Magalhães International Airport",
         "countryName" : "Brazil",
+        "state":"1"
     },
     {
         "code": "BOG",
         "name": "El Dorado International Airport",
         "countryName" : "Colombia",
+        "state":"1"
     },
     {
         "code": "BLA",
         "name": "General José Antonio Anzoategui International Airport",
         "countryName" : "Venezuela",
+        "state":"1"
     },
     {
         "code": "NAT",
         "name": "Governador Aluízio Alves International Airport",
         "countryName" : "Brazil",
+        "state":"1"
     },
     {
         "code": "FLN",
         "name": "Hercílio Luz International Airport",
         "countryName" : "Brazil",
+        "state":"1"
     },
     {
         "code": "ZYA",

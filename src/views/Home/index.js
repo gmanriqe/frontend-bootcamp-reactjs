@@ -1,16 +1,41 @@
 import "flatpickr/dist/themes/material_green.css";
 
 import Flatpickr from "react-flatpickr";
+import Select from 'react-select' // react select
 import { useState } from 'react';
 
 import { Spanish } from 'flatpickr/dist/l10n/es.js'; // configure language for flatpickr
 import { Banner } from "../../components/Banner";
-import { Paises } from "../../mock/Country";
+import { Paises as paises } from "../../mock/Country";
 
 const Home = () => {
 
     const [state, setstate] = useState(new Date());
     const [dateEnd, setDateEnd] = useState(new Date());
+
+    const dataFilter = paises.filter((item) => {
+        return item.state === '1'
+    })
+
+    const optionsDeparture = []
+    if (dataFilter.length > 0) {
+        dataFilter.map(item => 
+            optionsDeparture.push({
+                value: item.code,
+                label: `${item.countryName} - ${item.name}`
+            })
+        )
+    }
+
+    const optionsArribal = []
+    if (dataFilter.length > 0) {
+        dataFilter.map(item => 
+            optionsArribal.push({
+                value: item.code,
+                label: `${item.countryName} - ${item.name}`
+            })
+        )
+    }
 
     return (
         <>
@@ -20,11 +45,11 @@ const Home = () => {
                     <div className='card p-sm'>
                         <form className='grid grid-cols-1 lg:grid-cols-2 gap-4'>
                             <div className='form-group'>
-                                <select className='form-control'></select>
+                                <Select className='form-control-select' options={optionsDeparture} />
                                 <span className='message-error'>Campo obligatorio</span>
                             </div>
                             <div className='form-group'>
-                                <select className='form-control'></select>
+                                <Select className='form-control-select' options={optionsArribal} />
                                 <span className='message-error'>Campo obligatorio</span>
                             </div>
                             <div className='form-group'>

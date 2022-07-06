@@ -173,3 +173,10 @@ h6 {
         height: 380px;
     }
 }
+
+/**********************
+* React Select
+**********************/
+.form-control-select div[class*='ValueContainer'] {
+    height: 42px;
+}
