@@ -39,11 +39,11 @@ const Home = () => {
 
     return (
         <>
-            <Banner title="VUELOS AEREOS" />
+            <Banner title="VUELOS AEREOS"/>
             <section className='p-lg'>
                 <div className='container mx-auto'>
                     <div className='card p-sm'>
-                        <form className='grid grid-cols-1 lg:grid-cols-2 gap-4'>
+                        <form className='grid grid-cols-1 lg:grid-cols-2 gap-4' onSubmit={() => {alert('hey')}} >
                             <div className='form-group'>
                                 <Select className='form-control-select' options={optionsDeparture} />
                                 <span className='message-error'>Campo obligatorio</span>
