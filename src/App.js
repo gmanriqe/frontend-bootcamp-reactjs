@@ -1,9 +1,13 @@
-import './App.css';
-import Home from './views/Home';
+// 1ero: Paquetes de terceros
+import RoutesComponent from './routes/index';
+
+// 2do: Paquetes de mi propio proyecto
 
 function App() {
   return (
-    <Home/>
+    <div className='App'>
+        <RoutesComponent />
+    </div>
   );
 }
 
