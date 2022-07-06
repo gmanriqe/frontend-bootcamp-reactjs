@@ -12,7 +12,7 @@
     url("../fonts/lato/lato-bold-webfont.woff") format("woff"),
     url("../fonts/lato/lato-bold-webfont.ttf") format("truetype"),
     url("../fonts/lato/lato-bold-webfont.svg#latobold") format("svg");
-  font-weight: 400;
+  font-weight: 700;
   font-style: normal;
 }
 
@@ -30,7 +30,7 @@
       format("truetype"),
     url("../fonts/montserrat/montserrat-variablefont_wght-webfont.svg#montserratthin")
       format("svg");
-  font-weight: 700;
+  font-weight: 400;
   font-style: normal;
 }
 
