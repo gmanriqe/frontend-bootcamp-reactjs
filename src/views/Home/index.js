@@ -59,9 +59,9 @@ const Home = () => {
         )
     }
 
-    async function handlerSubmitMainSearch(evt) {
+    const handlerSubmitMainSearch = async (evt) => {
         evt.preventDefault();
-        
+
         const { originLocationCode, destinationLocationCode } = evt.currentTarget
         const dateVal = dayjs(new Date(departureDate)).format('YYYY-MM-DD')
 
@@ -71,7 +71,6 @@ const Home = () => {
                 'Authorization': `Bearer ${token}`
             }
         });
-        console.log(token)
         const data = await response.json();
         console.log(data)
     }
