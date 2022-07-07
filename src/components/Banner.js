@@ -12,7 +12,7 @@ export const Banner = ({ title }) => {
         } className="banner-z">
             <div className='container mx-auto'>
                 <div className='banner-z__content flex justify-start items-center'>
-                    <h1>{title}</h1>
+                    <h2>{title}</h2>
                 </div>
             </div>
         </header>

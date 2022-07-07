@@ -1,19 +1,23 @@
+// 1ero: Paquetes de terceros
 import 'flatpickr/dist/themes/material_green.css';
-import dayjs from 'dayjs'; // dayjs
-
+import Select from 'react-select'
 import Flatpickr from 'react-flatpickr'; // flatpickr
-import Select from 'react-select' // react select
+import dayjs from 'dayjs'; // dayjs
 import { useEffect, useState } from 'react';
-
 import { Spanish } from 'flatpickr/dist/l10n/es.js'; // configure language for flatpickr
+import { useNavigate } from 'react-router'
+
+// 2do: Paquetes de mi propio proyecto
 import { Banner } from '../../components/Banner';
 import { Paises as paises } from '../../mock/Country';
-
 import { formData } from '../../mock/Token';
 
 dayjs.locale('es')
 
 const Home = () => {
+    const navigate = useNavigate()
+
+    const [search, setSearch] = useState('')
     const [departureDate, setDepartureDate] = useState(new Date());
     const [dateEnd, setDateEnd] = useState(new Date());
     const [token, setToken] = useState(null);
@@ -72,12 +76,15 @@ const Home = () => {
             }
         });
         const data = await response.json();
-        console.log(data)
+        localStorage.setItem('search', JSON.stringify(data))
+
+        // navegar a la sgte. vista
+        navigate(`/results`)
     }
 
     return (
         <>
-            <Banner title='VUELOS AEREOS' />
+            <Banner title='VUELOS' />
             <section className='pt-lg'>
                 <div className='container mx-auto'>
                     <div className='card p-sm'>

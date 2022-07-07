@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 // 2do: Paquetes de mi propio proyecto
 import Home from '../views/Home';
 import Results from '../views/Results';
+import Detail from '../views/Detail';
 
 // recuerda este componente no tiene llaves, directo con parentesis
 const RoutesComponent = () => (
@@ -11,6 +12,7 @@ const RoutesComponent = () => (
         <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/results" element={<Results />} />
+            <Route path="/detail/:id" element={<Detail />} />
             <Route path="*" element={<div>404</div>} />
         </Routes>
     </BrowserRouter>

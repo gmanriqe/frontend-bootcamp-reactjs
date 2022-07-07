@@ -6,6 +6,7 @@
   --blue-color: #0070f3;
   --black-color: #000;
   --white-color: #fff;
+  --icon-travel: #5f6368;
   --control-form-color: #d9d9d9;
   --error-message-form-color: #ff0000;
 
@@ -20,8 +21,8 @@ html {
 
 body {
   margin: 0;
-  font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+  font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -72,8 +73,8 @@ h3,
 h4,
 h5,
 h6 {
-    font-family: 'Lato', sans-serif;
-    font-weight: 700;
+  font-family: "Lato", sans-serif;
+  font-weight: 700;
 }
 
 /**********************
@@ -112,7 +113,7 @@ h6 {
 * Buttons
 **********************/
 .btn {
-  color: var(--white-color);
+  color: var(--control-form-color);
   display: inline-block;
   padding: 0.625rem 1rem;
   font-family: "Lato", sans-serif;
@@ -120,15 +121,20 @@ h6 {
   border: 1px solid var(--control-form-color);
   border-radius: 24px;
 }
+.btn:hover {
+  opacity: 0.8;
+}
 .btn strong {
   vertical-align: middle;
 }
 .btn span {
-    margin-right: 4px;
+  margin-right: 4px;
 }
-.btn:hover {
-  opacity: 0.8;
+.btn.btn-block {
+    display: block;
+    width: 100%
 }
+/* btn search */
 .btn.btn-search {
   background-color: var(--blue-color);
   border: 1px solid var(--blue-color);
@@ -144,39 +150,102 @@ h6 {
 }
 
 /**********************
+* List Flight
+**********************/
+.list-flight .card-flight:first-child {
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+.list-flight .card-flight:last-child {
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+/**********************
+* Card Flight
+**********************/
+.card-flight {
+  border: 1px solid var(--control-form-color);
+  padding: 1rem 4rem 1rem 1rem;
+  position: relative;
+  margin-bottom: -1px;
+}
+.card-flight__image {
+    width: 68px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.card-flight__luggage .material-icons{
+    font-size: 24px;
+    color: var(--icon-travel);
+}
+.card-flight__luggage span {
+    display: inline-block;
+    font-weight: 600;
+    font-size: 14px;
+    vertical-align: middle;
+}
+.card-flight__dropdown {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1;
+}
+.card-flight__dropdown .material-icons {
+    font-size: 28px;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    line-height: 48px;
+}
+.card-flight__dropdown:hover .material-icons {
+    background-color: var(--control-form-color);
+}
+.card-flight__image span {
+    font-size: 2rem;
+}
+.card-flight__hours span {
+    font-size: 14px;
+}
+.card-flight__hours p {
+    font-weight: 600;
+}
+
+/**********************
 * Banner
 **********************/
 .banner-z {
-    position: relative;
+  position: relative;
 }
-.banner-z h1 {
-    position: relative;
-    z-index: 2;
-    color: var(--white-color);
+.banner-z h2 {
+  position: relative;
+  z-index: 2;
+  color: var(--white-color);
 }
 .banner-z::after {
-    content: '';
-    display: block;
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    background-color: rgba(0,0,0,0.5);
+  content: "";
+  display: block;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
 }
 .banner-z__content {
-    height: 300px;
+  height: 260px;
 }
 
 @media screen and (min-width: 1024px) {
-    .banner-z__content {
-        height: 380px;
-    }
+  .banner-z__content {
+    height: 280px;
+  }
 }
 
 /**********************
 * React Select
 **********************/
-.form-control-select div[class*='ValueContainer'] {
-    height: 42px;
+.form-control-select div[class*="ValueContainer"] {
+  height: 42px;
 }

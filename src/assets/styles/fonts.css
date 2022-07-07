@@ -1,7 +1,6 @@
 /**********************
 * Fonts
 **********************/
-
 /* Lato */
 @font-face {
   font-family: "Lato";
@@ -30,7 +29,21 @@
       format("truetype"),
     url("../fonts/montserrat/montserrat-variablefont_wght-webfont.svg#montserratthin")
       format("svg");
+  font-weight: 100;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Montserrat";
+  src: url("../fonts/montserrat/Montserrat-Regular.ttf") format("truetype");
   font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Montserrat";
+  src: url("../fonts/montserrat/Montserrat-SemiBold.ttf") format("truetype");
+  font-weight: 600;
   font-style: normal;
 }
 

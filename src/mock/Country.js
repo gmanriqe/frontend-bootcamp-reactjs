@@ -2,14 +2,8 @@
 // https://airportcodes.io/en/continent/south-america/
 export const Paises = [
     {
-        "code": "CWB",
-        "name": "Afonso Pena Airport",
-        "countryName" : "Brazil",
-        "state":"1"
-    },
-    {
-        "code": "CUZ",
-        "name": "Alejandro Velasco Astete International Airport",
+        "code": "LIM",
+        "name": "Jorge Chávez International Airport",
         "countryName" : "Peru",
         "state":"1"
     },
@@ -38,12 +32,6 @@ export const Paises = [
         "state":"1"
     },
     {
-        "code": "SSA",
-        "name": "Deputado Luiz Eduardo Magalhães International Airport",
-        "countryName" : "Brazil",
-        "state":"1"
-    },
-    {
         "code": "BOG",
         "name": "El Dorado International Airport",
         "countryName" : "Colombia",
@@ -62,8 +50,44 @@ export const Paises = [
         "state":"1"
     },
     {
+        "code": "CUZ",
+        "name": "Alejandro Velasco Astete International Airport",
+        "countryName" : "Peru",
+        "state":"1"
+    },
+    {
         "code": "FLN",
         "name": "Hercílio Luz International Airport",
+        "countryName" : "Brazil",
+        "state":"1"
+    },
+    {
+        "code": "UIO",
+        "name": "Mariscal Sucre International Airport",
+        "countryName" : "Ecuador",
+        "state":"1"
+    },
+    {
+        "code": "EZE",
+        "name": "Ministro Pistarini International Airport",
+        "countryName" : "Argentina",
+        "state":"1"
+    },
+    {
+        "code": "BSB",
+        "name": "Brasília International Airport",
+        "countryName" : "Brazil",
+        "state":"1"
+    },
+    {
+        "code": "VVI",
+        "name": "Viru Viru International Airport",
+        "countryName" : "Bolivia",
+        "state":"1"
+    },
+    {
+        "code": "CWB",
+        "name": "Afonso Pena Airport",
         "countryName" : "Brazil",
         "state":"1"
     },
