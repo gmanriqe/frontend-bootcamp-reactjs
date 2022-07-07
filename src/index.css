@@ -80,6 +80,9 @@ h6 {
 /**********************
 * Forms
 **********************/
+.form-group {
+  /* margin-bottom: 8px; */
+}
 .form-control {
   display: block;
   width: 100%;
@@ -94,12 +97,10 @@ h6 {
   height: 42px;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
-
 .form-control:focus() {
   outline: 0;
   border-color: var(--blue-color);
 }
-
 .message-error {
   display: none;
   font-size: 12px;
@@ -107,6 +108,11 @@ h6 {
 }
 .message-error.error {
   display: block;
+}
+.form-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  color: var(--black-color);
 }
 
 /**********************
@@ -131,22 +137,14 @@ h6 {
   margin-right: 4px;
 }
 .btn.btn-block {
-    display: block;
-    width: 100%
+  display: block;
+  width: 100%;
 }
 /* btn search */
 .btn.btn-search {
   background-color: var(--blue-color);
   border: 1px solid var(--blue-color);
   color: var(--white-color);
-}
-
-/**********************
-* Card
-**********************/
-.card {
-  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
-  border-radius: 4px;
 }
 
 /**********************
@@ -157,9 +155,19 @@ h6 {
   border-top-right-radius: 8px;
 }
 .list-flight .card-flight:last-child {
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
 }
+
+/**********************
+* Card
+**********************/
+.card {
+  background-color: var(--white-color);
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+  border-radius: 4px;
+}
+
 /**********************
 * Card Flight
 **********************/
@@ -170,46 +178,58 @@ h6 {
   margin-bottom: -1px;
 }
 .card-flight__image {
-    width: 68px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  width: 68px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-.card-flight__luggage .material-icons{
-    font-size: 24px;
-    color: var(--icon-travel);
+.card-flight__luggage .material-icons {
+  font-size: 24px;
+  color: var(--icon-travel);
 }
 .card-flight__luggage span {
-    display: inline-block;
-    font-weight: 600;
-    font-size: 14px;
-    vertical-align: middle;
+  display: inline-block;
+  font-weight: 600;
+  font-size: 14px;
+  vertical-align: middle;
 }
 .card-flight__dropdown {
-    position: absolute;
-    right: 8px;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 1;
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1;
 }
 .card-flight__dropdown .material-icons {
-    font-size: 28px;
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    line-height: 48px;
+  font-size: 28px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  line-height: 48px;
 }
 .card-flight__dropdown:hover .material-icons {
-    background-color: var(--control-form-color);
+  background-color: var(--control-form-color);
 }
 .card-flight__image span {
-    font-size: 2rem;
+  font-size: 2rem;
 }
 .card-flight__hours span {
-    font-size: 14px;
+  font-size: 14px;
 }
 .card-flight__hours p {
-    font-weight: 600;
+  font-weight: 600;
+}
+
+/**********************
+* Search flight
+**********************/
+.search-flight {
+  margin-top: -240px;
+  position: relative;
+  z-index: 10;
+}
+.search-flight h2 {
+	color: var(--white-color);
 }
 
 /**********************
@@ -248,4 +268,23 @@ h6 {
 **********************/
 .form-control-select div[class*="ValueContainer"] {
   height: 42px;
+}
+
+/**********************
+* Flatpickr
+**********************/
+.form-flatpickr {
+  position: relative;
+}
+.form-flatpickr .form-control {
+  padding: 0 2.25rem 0 0.625rem;
+}
+.form-flatpickr .form-flatpickr__icon {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+}
+.form-flatpickr .form-flatpickr__icon .material-icons {
+	color: #cbcbcb;
 }

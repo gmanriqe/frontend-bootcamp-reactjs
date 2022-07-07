@@ -17,9 +17,8 @@ dayjs.locale('es')
 const Home = () => {
     const navigate = useNavigate()
 
-    const [search, setSearch] = useState('')
     const [departureDate, setDepartureDate] = useState(new Date());
-    const [dateEnd, setDateEnd] = useState(new Date());
+    const [arrivalDate, setArrivalDate] = useState(new Date());
     const [token, setToken] = useState(null);
 
     useEffect(() => {
@@ -43,7 +42,21 @@ const Home = () => {
         return item.state === '1'
     })
 
-    const optionsArribal = []
+    const optionsDeparture = []
+    if (dataFilter.length > 0) {
+        dataFilter.map(item =>
+            optionsDeparture.push({
+                value: item.code,
+                label: `${item.countryName} - ${item.name}`
+            })
+        )
+    }
+
+    const optionsArribal = [{
+        value: '',
+        label: 'SELECCIONE...',
+        isDisabled: true
+    }]
     if (dataFilter.length > 0) {
         dataFilter.map(item =>
             optionsArribal.push({
@@ -53,14 +66,24 @@ const Home = () => {
         )
     }
 
-    const optionsDeparture = []
-    if (dataFilter.length > 0) {
-        dataFilter.map(item =>
-            optionsDeparture.push({
-                value: item.code,
-                label: `${item.countryName} - ${item.name}`
-            })
-        )
+    const numberPassengersAdult = []
+    for (let i = 1; i < 10; i++) {
+        numberPassengersAdult.push({
+            value: i,
+            label: i
+        })
+    }
+
+    const numberPassengersBaby = [{
+        value: '',
+        label: 'SELECCIONE...',
+        isDisabled: true
+    }]
+    for (let i = 1; i < 10; i++) {
+        numberPassengersBaby.push({
+            value: i,
+            label: i
+        })
     }
 
     const handlerSubmitMainSearch = async (evt) => {
@@ -84,53 +107,98 @@ const Home = () => {
 
     return (
         <>
-            <Banner title='VUELOS' />
+            <Banner title='' />
             <section className='pt-lg'>
                 <div className='container mx-auto'>
-                    <div className='card p-sm'>
-                        <form className='grid grid-cols-1 lg:grid-cols-2 gap-4' onSubmit={handlerSubmitMainSearch} >
-                            <div className='form-group'>
-                                <Select className='form-control-select' options={optionsDeparture} name='originLocationCode' />
-                                <span className='message-error'>Campo obligatorio</span>
-                            </div>
-                            <div className='form-group'>
-                                <Select className='form-control-select' options={optionsArribal} name='destinationLocationCode' />
-                                <span className='message-error'>Campo obligatorio</span>
-                            </div>
-                            <div className='form-group'>
-                                <Flatpickr
-                                    className='form-control'
-                                    name='departureDate'
-                                    value={departureDate}
-                                    options={{
-                                        enableTime: false,
-                                        dateFormat: 'l, d M',
-                                        locale: Spanish
-                                    }}
-                                    onChange={(val) => (setDepartureDate(val))}
-                                />
-                                <span className='message-error'>Campo obligatorio</span>
-                            </div>
-                            {/* <div className='form-group'>
-                                <Flatpickr
-                                    className='form-control'
-                                    value={dateEnd}
-                                    options={{
-                                        enableTime: false,
-                                        dateFormat: "l, d M",
-                                        locale: Spanish
-                                    }}
-                                    onChange={(setDateEnd) => console.log(setDateEnd)}
-                                />
-                                <span className='message-error'>Campo obligatorio</span>
-                            </div> */}
-                            <div className='form-group col-span-2 text-right'>
-                                <button className='btn btn-search'>
-                                    <span className='material-icons'>search</span>
-                                    <strong>Buscar</strong>
-                                </button>
-                            </div>
-                        </form>
+                    <div className='search-flight'>
+                        <h2 className="text-center">VUELOS</h2>
+                        <div className='card p-sm'>
+                            <form className='grid grid-cols-1 lg:grid-cols-2 gap-4' onSubmit={handlerSubmitMainSearch} >
+                                <div className='form-group'>
+                                    <label className='form-label'>¿Desde dónde? *</label>
+                                    <Select
+                                        className='form-control-select'
+                                        defaultValue={{ value: 'LIM', label: 'Peru - Jorge Chávez International Airport' }}
+                                        options={optionsDeparture}
+                                        name='originLocationCode' />
+                                    <span className='message-error'>Campo obligatorio</span>
+                                </div>
+                                <div className='form-group'>
+                                    <label className='form-label'>¿A dónde quiere ir? *</label>
+                                    <Select
+                                        className='form-control-select'
+                                        defaultValue={{ value: '', label: 'SELECCIONE...' }}
+                                        isOptionDisabled={(option) => option.isDisabled}
+                                        options={optionsArribal}
+                                        name='destinationLocationCode' />
+                                    <span className='message-error'>Campo obligatorio</span>
+                                </div>
+                                <div className='form-group'>
+                                    <label className='form-label'>Salida *</label>
+                                    <div className='form-flatpickr'>
+                                        <Flatpickr
+                                            className='form-control'
+                                            name='departureDate'
+                                            value={departureDate}
+                                            options={{
+                                                enableTime: false,
+                                                dateFormat: 'l, d M',
+                                                locale: Spanish
+                                            }}
+                                            onChange={(val) => (setDepartureDate(val))}
+                                        />
+                                        <div className='form-flatpickr__icon'>
+                                            <span className='material-icons'>calendar_today</span>
+                                        </div>
+                                    </div>
+                                    <span className='message-error'>Campo obligatorio</span>
+                                </div>
+                                <div className='form-group'>
+                                    <label className='form-label'>Retorno</label>
+                                    <div className='form-flatpickr'>
+                                        <Flatpickr
+                                            className='form-control flatpickr-date'
+                                            value={arrivalDate}
+                                            options={{
+                                                enableTime: false,
+                                                dateFormat: "l, d M",
+                                                locale: Spanish
+                                            }}
+                                            onChange={(val) => (setArrivalDate(val))}
+                                        />
+                                        <div className='form-flatpickr__icon'>
+                                            <span className='material-icons'>calendar_today</span>
+                                        </div>
+                                    </div>
+                                    <span className='message-error'>Campo obligatorio</span>
+                                </div>
+                                <div className='form-group'>
+                                    <label className='form-label'>Adultos *</label>
+                                    <Select
+                                        className='form-control-select'
+                                        defaultValue={{ value: '1', label: '1' }}
+                                        options={numberPassengersAdult}
+                                        name='adults' />
+                                    <span className='message-error'>Campo obligatorio</span>
+                                </div>
+                                <div className='form-group'>
+                                    <label className='form-label'>Niños</label>
+                                    <Select
+                                        className='form-control-select'
+                                        defaultValue={{ value: '', label: 'SELECCIONE...' }}
+                                        isOptionDisabled={(option) => option.isDisabled}
+                                        options={numberPassengersBaby}
+                                        name='children' />
+                                    <span className='message-error'>Campo obligatorio</span>
+                                </div>
+                                <div className='form-group col-span-2 text-right'>
+                                    <button className='btn btn-search'>
+                                        <span className='material-icons'>search</span>
+                                        <strong>Buscar</strong>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </section>
