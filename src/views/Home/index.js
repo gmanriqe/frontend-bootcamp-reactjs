@@ -93,7 +93,7 @@ const Home = () => {
             label: i
         })
     }
-    
+
 
     /*
     const handlerSubmitMainSearch = async (evt) => {
@@ -143,12 +143,12 @@ const Home = () => {
                                     if (!valores.destinationLocationCode.value) {
                                         errores.destinationLocationCodeMessage = '¿A DÓNDE QUIERE IR? es requerido';
                                     }
-                                    if(valores.departureDate.length === 0) {
+                                    if (valores.departureDate.length === 0) {
                                         errores.departureDateMessage = 'SALIDA es requerida';
                                     }
-                                    if(valores.arrivalDate.length) {
+                                    if (valores.arrivalDate.length) {
                                         console.log(valores.arrivalDate.length)
-                                        if(Date.parse(valores.departureDate) > Date.parse(valores.arrivalDate)) {
+                                        if (Date.parse(valores.departureDate) > Date.parse(valores.arrivalDate)) {
                                             errores.arrivalDateHigherMessage = 'RETORNO debe ser mayor a la salida';
                                         }
                                     }
@@ -163,8 +163,31 @@ const Home = () => {
                                 {({ values, errors, handleSubmit }) => ( // {} es por la destructuracion
                                     <form className='grid grid-cols-1 lg:grid-cols-2 gap-4' onSubmit={handleSubmit} >
                                         {console.log(values)}
+                                        <div className='form-group col-span-2'>
+                                            <div className='form-control-radio'>
+                                                <input
+                                                    type='radio'
+                                                    id='opt-departure-date'
+                                                    name='opt-content-page'
+                                                    defaultChecked
+                                                />
+                                                <input
+                                                    type='radio'
+                                                    id='opt-return-date'
+                                                    name='opt-content-page'
+                                                />
+                                                <label htmlFor='opt-departure-date' className='form-label'>
+                                                    <div className='form-control-radio__dot'></div>
+                                                    <span>IDA Y REGRESO</span>
+                                                </label>
+                                                <label htmlFor='opt-return-date' className='form-label'>
+                                                    <div className='form-control-radio__dot'></div>
+                                                    <span>SOLO IDA</span>
+                                                </label>
+                                            </div>
+                                        </div>
                                         <div className='form-group'>
-                                            <label htmlform='originLocationCode' className='form-label'>¿Desde dónde? *</label>
+                                            <label htmlFor='originLocationCode' className='form-label'>¿Desde dónde? *</label>
                                             <Select
                                                 className='form-control-select'
                                                 defaultValue={values.originLocationCode}
@@ -186,7 +209,7 @@ const Home = () => {
                                             {errors.destinationLocationCodeMessage && <span className='message-error error'>{errors.destinationLocationCodeMessage}</span>}
                                         </div>
                                         <div className='form-group'>
-                                            <label htmlFor='departureDate' className='form-label'>Salida *</label>
+                                            <label htmlFor='departureDate' className='form-label'>FECHA IDA *</label>
                                             <div className='form-flatpickr'>
                                                 <Flatpickr
                                                     className='form-control'
@@ -206,7 +229,7 @@ const Home = () => {
                                             {errors.departureDateMessage && <span className='message-error error'>{errors.departureDateMessage}</span>}
                                         </div>
                                         <div className='form-group'>
-                                            <label htmlFor='returnDate' className='form-label'>Retorno</label>
+                                            <label htmlFor='returnDate' className='form-label'>FECHA REGRESO</label>
                                             <div className='form-flatpickr'>
                                                 <Flatpickr
                                                     className='form-control flatpickr-date'
@@ -224,8 +247,8 @@ const Home = () => {
                                                     <span className='material-icons'>calendar_today</span>
                                                 </div>
                                             </div>
-                                            { errors.arrivalDateMessage && <span className='message-error error'>{errors.arrivalDateMessage}</span>}
-                                            { errors.arrivalDateHigherMessage && <span className='message-error error'>{errors.arrivalDateHigherMessage}</span>}
+                                            {errors.arrivalDateMessage && <span className='message-error error'>{errors.arrivalDateMessage}</span>}
+                                            {errors.arrivalDateHigherMessage && <span className='message-error error'>{errors.arrivalDateHigherMessage}</span>}
                                         </div>
                                         <div className='form-group'>
                                             <label htmlFor='adults' className='form-label'>Adultos *</label>
