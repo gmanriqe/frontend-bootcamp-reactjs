@@ -37,7 +37,7 @@ const Results = () => {
                                             </div>
                                             <div className='card-flight__luggage'> {item.oneWay === true ? '' : <span className="material-icons">no_luggage</span>} <span>{item.price.grandTotal} {item.price.currency}</span></div>
                                             <button className='card-flight__dropdown'>
-                                                <span class="material-icons">keyboard_arrow_down</span>
+                                                <span className="material-icons">keyboard_arrow_down</span>
                                             </button>
                                         </div>
                                     </li>
