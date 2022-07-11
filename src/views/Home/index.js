@@ -1,5 +1,5 @@
 // 1ero: Paquetes de terceros
-import 'flatpickr/dist/themes/material_green.css';
+// import "flatpickr/dist/flatpickr.css";
 import Select from 'react-select'
 import Flatpickr from 'react-flatpickr'; // flatpickr
 import dayjs from 'dayjs'; // dayjs
@@ -12,7 +12,6 @@ import { Formik } from 'formik';
 import { Banner } from '../../components/Banner';
 import { Paises as paises } from '../../mock/Country';
 import { formData } from '../../mock/Token';
-import { useRef } from 'react';
 dayjs.locale('es')
 
 const Home = () => {
@@ -115,6 +114,11 @@ const Home = () => {
     }
     */
 
+    const handleDropdown = () => {
+        const $dropdown = document.getElementById('dropdown-content')
+        $dropdown.classList.toggle('show')
+    }
+
     /**
      * Radio buttons (ida y regreso / solo ida)
      */
@@ -136,27 +140,10 @@ const Home = () => {
     /**
      * Cerrar dropdown cuando se hace click afuera
      */
-    const ref = useRef()
-    const [dropdownOpen, setDropdownOpen] = useState(false)
-    useEffect(() => {
-        const $dropdown = document.getElementById('dropdown-content')
-        $dropdown.classList.toggle('show')
 
-        const checkIfClickedOutside = e => {
-            // Si el menu está abierto y se hace click fuera del mismo, este será cerrado
-            if (dropdownOpen && ref.current && !ref.current.contains(e.target)) {
-                setDropdownOpen(false)
-            }
-        }
-
-        document.addEventListener("mousedown", checkIfClickedOutside)
-        return () => {
-            // limpiar el escuche del evento
-            document.removeEventListener("mousedown", checkIfClickedOutside)
-        }
-    }, [dropdownOpen])
-
-    /////
+    /**
+     * Formik validación
+     */
     const validateOnlyGoing = (valores) => {
         let errores = {};
 
@@ -263,11 +250,11 @@ const Home = () => {
                                                     <span>IDA Y REGRESO</span>
                                                 </label>
                                             </div>
-                                            <div className='form-control-dropdown' ref={ref}>
+                                            <div className='form-control-dropdown'>
                                                 <button
                                                     type="button"
                                                     className='dropdown'
-                                                    onClick={() => setDropdownOpen(oldState => !oldState)}
+                                                    onClick={() => handleDropdown()}
                                                 >
                                                     <span className="material-icons">person_4</span>
                                                     <span className='label'>1</span>
