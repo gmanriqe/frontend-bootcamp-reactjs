@@ -19,7 +19,7 @@ const Home = () => {
 
     // const navigate = useNavigate()
 
-    const [show, setShow] = useState(true)
+    const [optTypeFlight, setOptTypeFlightShow] = useState(false)
     const [token, setToken] = useState(null);
 
     useEffect(() => {
@@ -94,7 +94,6 @@ const Home = () => {
         })
     }
 
-
     /*
     const handlerSubmitMainSearch = async (evt) => {
         evt.preventDefault();
@@ -125,12 +124,12 @@ const Home = () => {
 
         if (value === 'going-and-return') {
             $depatureDateContent.classList.remove('col-span-2')
-            setShow(true)
+            setOptTypeFlightShow(true)
         }
 
         if (value === 'only-going') {
-            setShow(false)
             $depatureDateContent.classList.add('col-span-2')
+            setOptTypeFlightShow(false)
         }
     }
 
@@ -157,6 +156,52 @@ const Home = () => {
         }
     }, [dropdownOpen])
 
+    /////
+    const validateOnlyGoing = (valores) => {
+        let errores = {};
+
+        if (!valores.originLocationCode.value) { // si no hay valor en el campo originLocationCode
+            errores.originLocationCodeMessage = '¿DESDE DÓNDE? es requerido';
+        }
+
+        if (valores.destinationLocationCode.value === '') {
+            errores.destinationLocationCodeMessage = '¿A DÓNDE QUIERE IR? es requerido';
+        }
+
+        if (valores.departureDate.length === 0) {
+            errores.departureDateMessage = 'FECHA IDA es requerida';
+        }
+
+        return errores
+
+    }
+
+    const validateGoingAndReturn = (valores) => {
+        let errores = {};
+
+        if (!valores.originLocationCode.value) { // si no hay valor en el campo originLocationCode
+            errores.originLocationCodeMessage = '¿DESDE DÓNDE? es requerido';
+        }
+
+        if (valores.destinationLocationCode.value === '') {
+            errores.destinationLocationCodeMessage = '¿A DÓNDE QUIERE IR? es requerido';
+        }
+
+        if (valores.departureDate.length === 0) {
+            errores.departureDateMessage = 'FECHA IDA es requerida';
+        }
+
+        if (valores.arrivalDate.length === 0) {
+            errores.arrivalDateMessage = 'FECHA REGRESO es requerida';
+        } else {
+            if (Date.parse(valores.departureDate[0]) > Date.parse(valores.arrivalDate[0])) {
+                errores.arrivalDateHigherMessage = 'FECHA REGRESO debe ser mayor a la salida';
+            }
+        }
+
+        return errores
+    }
+
     return (
         <>
             <Banner title='' />
@@ -170,34 +215,24 @@ const Home = () => {
                                 initialValues={{
                                     originLocationCode: { value: 'SCL', label: 'Chile - Comodoro Arturo Merino Benítez International Airport' },
                                     destinationLocationCode: { value: '', label: 'SELECCIONE...' },
-                                    departureDate: new Date(),
-                                    arrivalDate: new Date(),
+                                    departureDate: [new Date()],
+                                    arrivalDate: optTypeFlight === false ? [] : [new Date()]
                                 }}
                                 // validaciones del formulario
                                 validate={(valores) => {
-                                    let errores = {};
-                                    console.log(valores.originLocationCode.value)
-                                    if (!valores.originLocationCode.value) { // si no hay valor en el campo originLocationCode
-                                        errores.originLocationCodeMessage = '¿DESDE DÓNDE? es requerido';
+                                    if (optTypeFlight === false) {
+                                        return validateOnlyGoing(valores);
                                     }
-                                    if (!valores.destinationLocationCode.value) {
-                                        errores.destinationLocationCodeMessage = '¿A DÓNDE QUIERE IR? es requerido';
+
+                                    if (optTypeFlight === true) {
+                                        return validateGoingAndReturn(valores);
                                     }
-                                    if (valores.departureDate.length === 0) {
-                                        errores.departureDateMessage = 'SALIDA es requerida';
-                                    }
-                                    if (valores.arrivalDate.length) {
-                                        console.log(valores.arrivalDate.length)
-                                        if (Date.parse(valores.departureDate) > Date.parse(valores.arrivalDate)) {
-                                            errores.arrivalDateHigherMessage = 'RETORNO debe ser mayor a la salida';
-                                        }
-                                    }
-                                    return errores;
+
+                                    // return errores;
                                 }}
                                 // se ejecuta cuando el formulario es enviado
                                 onSubmit={(valores) => {
-                                    console.log(valores);
-                                    // console.log(valores.destinationLocationCode.value)
+                                    // console.log(valores);
                                 }}
                             >
                                 {({ values, errors, handleSubmit }) => ( // {} es por la destructuracion
@@ -206,26 +241,26 @@ const Home = () => {
                                             <div className='form-control-radio'>
                                                 <input
                                                     type='radio'
-                                                    id='opt-departure-date'
-                                                    name='opt-content-page'
-                                                    defaultChecked
-                                                    onChange={handleChangeRadio}
-                                                    defaultValue='going-and-return'
-                                                />
-                                                <input
-                                                    type='radio'
                                                     id='opt-return-date'
                                                     name='opt-content-page'
                                                     onChange={handleChangeRadio}
                                                     defaultValue='only-going'
+                                                    defaultChecked
                                                 />
-                                                <label htmlFor='opt-departure-date' className='form-label'>
-                                                    <div className='form-control-radio__dot'></div>
-                                                    <span>IDA Y REGRESO</span>
-                                                </label>
+                                                <input
+                                                    type='radio'
+                                                    id='opt-departure-date'
+                                                    name='opt-content-page'
+                                                    onChange={handleChangeRadio}
+                                                    defaultValue='going-and-return'
+                                                />
                                                 <label htmlFor='opt-return-date' className='form-label'>
                                                     <div className='form-control-radio__dot'></div>
                                                     <span>SOLO IDA</span>
+                                                </label>
+                                                <label htmlFor='opt-departure-date' className='form-label'>
+                                                    <div className='form-control-radio__dot'></div>
+                                                    <span>IDA Y REGRESO</span>
                                                 </label>
                                             </div>
                                             <div className='form-control-dropdown' ref={ref}>
@@ -287,11 +322,12 @@ const Home = () => {
                                             />
                                             {errors.destinationLocationCodeMessage && <span className='message-error error'>{errors.destinationLocationCodeMessage}</span>}
                                         </div>
-                                        <div className='form-group' id='departureDate-content'>
+                                        <div className='form-group col-span-2' id='departureDate-content'>
                                             <label htmlFor='departureDate' className='form-label'>FECHA IDA *</label>
                                             <div className='form-flatpickr'>
                                                 <Flatpickr
                                                     className='form-control'
+                                                    placeholder='SELECCIONE...'
                                                     value={values.departureDate}
                                                     options={{
                                                         enableTime: false,
@@ -308,12 +344,13 @@ const Home = () => {
                                             {errors.departureDateMessage && <span className='message-error error'>{errors.departureDateMessage}</span>}
                                         </div>
                                         {
-                                            show ?
+                                            optTypeFlight ?
                                                 <div className='form-group' id='returnDate-content'>
                                                     <label htmlFor='returnDate' className='form-label'>FECHA REGRESO</label>
                                                     <div className='form-flatpickr'>
                                                         <Flatpickr
                                                             className='form-control flatpickr-date'
+                                                            placeholder='SELECCIONE...'
                                                             value={values.arrivalDate}
                                                             options={{
                                                                 enableTime: false,
@@ -322,6 +359,7 @@ const Home = () => {
                                                             }}
                                                             name='returnDate'
                                                             id='returnDate'
+                                                            onChange={(val) => (values.arrivalDate = val)}
                                                         />
                                                         <div className='form-flatpickr__icon'>
                                                             <span className='material-icons'>calendar_today</span>
