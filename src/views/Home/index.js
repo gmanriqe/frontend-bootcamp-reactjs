@@ -188,9 +188,9 @@ const Home = () => {
     /**
      * Formulario de búsqueda
      */
-    const handleSubmitMainSearch = async (listVal) => {
+    const handleSubmitMainOnlyGoing = async (listVal) => {
         const dateVal = dayjs(new Date(listVal.departureDate)).format('YYYY-MM-DD')
-        const response = await fetch(`https://test.api.amadeus.com/v2/shopping/flight-offers?originLocationCode=${listVal.originLocationCode.value}&destinationLocationCode=${listVal.destinationLocationCode.value}&departureDate=${dateVal}&adults=1`, {
+        const response = await fetch(`https://test.api.amadeus.com/v2/shopping/flight-offers?originLocationCode=${listVal.originLocationCode.value}&destinationLocationCode=${listVal.destinationLocationCode.value}&departureDate=${dateVal}&adults=${listVal.adults.value}`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -202,8 +202,24 @@ const Home = () => {
 
         navigate(`/results`)
     }
+
+    const handleSubmitMainGoingAndReturn = async (listVal) => {
+        const dateVal1 = dayjs(new Date(listVal.departureDate)).format('YYYY-MM-DD')
+        const dateVal2 = dayjs(new Date(listVal.arrivalDate)).format('YYYY-MM-DD')
+        const response = await fetch(`https://test.api.amadeus.com/v2/shopping/flight-offers?originLocationCode=${listVal.originLocationCode.value}&destinationLocationCode=${listVal.destinationLocationCode.value}&departureDate=${dateVal1}&returnDate=${dateVal2}&adults=${listVal.adults.value}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+
+        const data = await response.json();
+        localStorage.setItem('search', JSON.stringify(data))
+
+        navigate(`/results`)
+    } 
     /*
-    const handleSubmitMainSearch = async (evt) => {
+    const handleSubmitMainSearch_ = async (evt) => {
         evt.preventDefault();
 
         const { originLocationCode, destinationLocationCode } = evt.currentTarget
@@ -258,7 +274,11 @@ const Home = () => {
                                 onSubmit={(valores) => {
                                     console.log(valores);
                                     if (optTypeFlight === false) {
-                                        handleSubmitMainSearch(valores)
+                                        handleSubmitMainOnlyGoing(valores)
+                                    }
+
+                                    if (optTypeFlight === true) {
+                                        handleSubmitMainGoingAndReturn(valores)
                                     }
                                 }}
                             >
@@ -360,7 +380,8 @@ const Home = () => {
                                                     options={{
                                                         enableTime: false,
                                                         dateFormat: 'l, d M',
-                                                        locale: Spanish
+                                                        locale: Spanish,
+                                                        minDate: "today"
                                                     }}
                                                     id='departureDate'
                                                     onChange={(val) => values.departureDate = val.length === 0 ? '' : new Date(new Date(val[0]).setHours(new Date().getHours(), new Date().getMinutes(), new Date().getSeconds()))}
@@ -374,7 +395,7 @@ const Home = () => {
                                         {
                                             optTypeFlight ?
                                                 <div className='form-group' id='returnDate-content'>
-                                                    <label htmlFor='returnDate' className='form-label'>FECHA REGRESO</label>
+                                                    <label htmlFor='returnDate' className='form-label'>FECHA REGRESO *</label>
                                                     <div className='form-flatpickr'>
                                                         <Flatpickr
                                                             className='form-control flatpickr-date'
@@ -383,7 +404,8 @@ const Home = () => {
                                                             options={{
                                                                 enableTime: false,
                                                                 dateFormat: "l, d M",
-                                                                locale: Spanish
+                                                                locale: Spanish,
+                                                                minDate: "today"
                                                             }}
                                                             id='returnDate'
                                                             onChange={(val) => values.arrivalDate = val.length === 0 ? '' : new Date(new Date(val[0]).setHours(new Date().getHours(), new Date().getMinutes(), new Date().getSeconds()))}
