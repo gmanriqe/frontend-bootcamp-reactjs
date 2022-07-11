@@ -78,6 +78,14 @@ h6 {
 }
 
 /**********************
+* Container
+**********************/
+.container-small {
+    max-width: 992px;
+    margin: 0 auto;
+}
+
+/**********************
 * Forms
 **********************/
 .form-group {
@@ -358,8 +366,6 @@ h6 {
 * Search flight
 **********************/
 .search-flight {
-  max-width: 992px;
-  margin: 0 auto;
   margin-top: -240px;
   position: relative;
   z-index: 10;

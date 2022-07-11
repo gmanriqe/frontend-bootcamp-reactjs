@@ -1,11 +1,11 @@
 // 1ero: Paquetes de terceros
 // import "flatpickr/dist/flatpickr.css";
+import { useEffect, useState } from 'react';
 import Select from 'react-select'
 import Flatpickr from 'react-flatpickr'; // flatpickr
 import dayjs from 'dayjs'; // dayjs
-import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router'
 import { Spanish } from 'flatpickr/dist/l10n/es.js'; // configure language for flatpickr
-// import { useNavigate } from 'react-router'
 import { Formik, Form } from 'formik';
 
 // 2do: Paquetes de mi propio proyecto
@@ -15,7 +15,7 @@ import { formData } from '../../mock/Token';
 dayjs.locale('es')
 
 const Home = () => {
-    // const navigate = useNavigate()
+    const navigate = useNavigate()
     const [totalAdults, setTotalAdults] = useState(1)
     const [totalChildren, setTotalChildren] = useState(0)
 
@@ -93,27 +93,6 @@ const Home = () => {
             label: i
         })
     }
-
-    /*
-    const handlerSubmitMainSearch = async (evt) => {
-        evt.preventDefault();
-
-        const { originLocationCode, destinationLocationCode } = evt.currentTarget
-        const dateVal = dayjs(new Date(departureDate)).format('YYYY-MM-DD')
-
-        const response = await fetch(`https://test.api.amadeus.com/v2/shopping/flight-offers?originLocationCode=${originLocationCode.value}&destinationLocationCode=${destinationLocationCode.value}&departureDate=${dateVal}&adults=1`, {
-            method: 'GET',
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        });
-        const data = await response.json();
-        localStorage.setItem('search', JSON.stringify(data))
-
-        // navegar a la sgte. vista
-        navigate(`/results`)
-    }
-    */
 
     const handleDropdown = () => {
         const $dropdown = document.getElementById('dropdown-content')
@@ -206,12 +185,50 @@ const Home = () => {
         setTotalChildren(val.value)
     }
 
+    /**
+     * Formulario de búsqueda
+     */
+    const handleSubmitMainSearch = async (listVal) => {
+        const dateVal = dayjs(new Date(listVal.departureDate)).format('YYYY-MM-DD')
+        const response = await fetch(`https://test.api.amadeus.com/v2/shopping/flight-offers?originLocationCode=${listVal.originLocationCode.value}&destinationLocationCode=${listVal.destinationLocationCode.value}&departureDate=${dateVal}&adults=1`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+
+        const data = await response.json();
+        localStorage.setItem('search', JSON.stringify(data))
+
+        navigate(`/results`)
+    }
+    /*
+    const handleSubmitMainSearch = async (evt) => {
+        evt.preventDefault();
+
+        const { originLocationCode, destinationLocationCode } = evt.currentTarget
+        const dateVal = dayjs(new Date(departureDate)).format('YYYY-MM-DD')
+
+        const response = await fetch(`https://test.api.amadeus.com/v2/shopping/flight-offers?originLocationCode=${originLocationCode.value}&destinationLocationCode=${destinationLocationCode.value}&departureDate=${dateVal}&adults=1`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        const data = await response.json();
+        localStorage.setItem('search', JSON.stringify(data))
+
+        // navegar a la sgte. vista
+        navigate(`/results`)
+    }
+    */
+
     return (
         <>
             <Banner title='' />
             <section className='pt-lg'>
                 <div className='container mx-auto'>
-                    <div className='search-flight'>
+                    <div className='search-flight container-small'>
                         <h2 className="text-center">VUELOS</h2>
                         <div className='card p-sm'>
                             <Formik
@@ -240,6 +257,9 @@ const Home = () => {
                                 // se ejecuta cuando el formulario es enviado
                                 onSubmit={(valores) => {
                                     console.log(valores);
+                                    if (optTypeFlight === false) {
+                                        handleSubmitMainSearch(valores)
+                                    }
                                 }}
                             >
                                 {/* {({ values, errors, handleSubmit }) => ( // {} es por la destructuracion */}

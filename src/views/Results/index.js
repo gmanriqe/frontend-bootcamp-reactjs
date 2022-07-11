@@ -19,7 +19,7 @@ const Results = () => {
             <Banner title='VUELOS DISPONIBLES' />
             <section className='main main-results'>
                 <div className='container mx-auto'>
-                    <div className='pt-lg'>
+                    <div className='container-small pt-lg'>
                         <p>Total resultados ({search.data.length})</p>
                         <ul className='list-flight grid grid-cols-1'>
                             {
