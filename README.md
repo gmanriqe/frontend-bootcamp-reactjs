@@ -14,7 +14,7 @@
 ## TEMAS
 
 - [x] Uso de bundler
-- [ ] Manejador de estado global
+- [ ] Redux (redux toolkit)
 - [ ] Hook
 - [x] Formik
 - [x] Fetch

@@ -1,17 +1,24 @@
+// 1ero: Paquetes de terceros
 import React from 'react';
 import { createRoot } from 'react-dom/client';
+import { Provider } from 'react-redux';
+import { store } from './app/store';
 import './assets/styles/fonts.css'; // fonts
 // import './assets/styles/flatpickr.css'; // flatpickr
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+// 2do: Paquetes de mi propio proyecto
+
 const container = document.getElementById('root');
 const root = createRoot(container);
 
 root.render(
     <React.StrictMode>
-        <App />
+        <Provider store={store}>
+            <App />
+        </Provider>
     </React.StrictMode>
 );
 
