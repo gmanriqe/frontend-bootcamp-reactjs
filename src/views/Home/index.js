@@ -12,14 +12,14 @@ import { Formik } from 'formik';
 import { Banner } from '../../components/Banner';
 import { Paises as paises } from '../../mock/Country';
 import { formData } from '../../mock/Token';
+import { useRef } from 'react';
 dayjs.locale('es')
 
 const Home = () => {
 
     // const navigate = useNavigate()
 
-    const [departureDate, setDepartureDate] = useState(new Date());
-    const [arrivalDate, setArrivalDate] = useState(new Date());
+    const [show, setShow] = useState(true)
     const [token, setToken] = useState(null);
 
     useEffect(() => {
@@ -116,6 +116,47 @@ const Home = () => {
     }
     */
 
+    /**
+     * Radio buttons (ida y regreso / solo ida)
+     */
+    const handleChangeRadio = (evt) => {
+        const { value } = evt.target;
+        const $depatureDateContent = document.getElementById('departureDate-content')
+
+        if (value === 'going-and-return') {
+            $depatureDateContent.classList.remove('col-span-2')
+            setShow(true)
+        }
+
+        if (value === 'only-going') {
+            setShow(false)
+            $depatureDateContent.classList.add('col-span-2')
+        }
+    }
+
+    /**
+     * Cerrar dropdown cuando se hace click afuera
+     */
+    const ref = useRef()
+    const [dropdownOpen, setDropdownOpen] = useState(false)
+    useEffect(() => {
+        const $dropdown = document.getElementById('dropdown-content')
+        $dropdown.classList.toggle('show')
+
+        const checkIfClickedOutside = e => {
+            // Si el menu está abierto y se hace click fuera del mismo, este será cerrado
+            if (dropdownOpen && ref.current && !ref.current.contains(e.target)) {
+                setDropdownOpen(false)
+            }
+        }
+
+        document.addEventListener("mousedown", checkIfClickedOutside)
+        return () => {
+            // limpiar el escuche del evento
+            document.removeEventListener("mousedown", checkIfClickedOutside)
+        }
+    }, [dropdownOpen])
+
     return (
         <>
             <Banner title='' />
@@ -130,11 +171,10 @@ const Home = () => {
                                     originLocationCode: { value: 'SCL', label: 'Chile - Comodoro Arturo Merino Benítez International Airport' },
                                     destinationLocationCode: { value: '', label: 'SELECCIONE...' },
                                     departureDate: new Date(),
-                                    arrivalDate: '',
+                                    arrivalDate: new Date(),
                                 }}
                                 // validaciones del formulario
                                 validate={(valores) => {
-                                    console.log(valores)
                                     let errores = {};
                                     console.log(valores.originLocationCode.value)
                                     if (!valores.originLocationCode.value) { // si no hay valor en el campo originLocationCode
@@ -162,19 +202,22 @@ const Home = () => {
                             >
                                 {({ values, errors, handleSubmit }) => ( // {} es por la destructuracion
                                     <form className='grid grid-cols-1 lg:grid-cols-2 gap-4' onSubmit={handleSubmit} >
-                                        {console.log(values)}
-                                        <div className='form-group col-span-2'>
+                                        <div className='form-group col-span-2 flex'>
                                             <div className='form-control-radio'>
                                                 <input
                                                     type='radio'
                                                     id='opt-departure-date'
                                                     name='opt-content-page'
                                                     defaultChecked
+                                                    onChange={handleChangeRadio}
+                                                    defaultValue='going-and-return'
                                                 />
                                                 <input
                                                     type='radio'
                                                     id='opt-return-date'
                                                     name='opt-content-page'
+                                                    onChange={handleChangeRadio}
+                                                    defaultValue='only-going'
                                                 />
                                                 <label htmlFor='opt-departure-date' className='form-label'>
                                                     <div className='form-control-radio__dot'></div>
@@ -184,6 +227,42 @@ const Home = () => {
                                                     <div className='form-control-radio__dot'></div>
                                                     <span>SOLO IDA</span>
                                                 </label>
+                                            </div>
+                                            <div className='form-control-dropdown' ref={ref}>
+                                                <button
+                                                    type="button"
+                                                    className='dropdown'
+                                                    onClick={() => setDropdownOpen(oldState => !oldState)}
+                                                >
+                                                    <span className="material-icons">person_4</span>
+                                                    <span className='label'>1</span>
+                                                    <span className="material-icons">arrow_drop_down</span>
+                                                </button>
+                                                <div className='dropdown-content' id="dropdown-content">
+                                                    <div className='form-group'>
+                                                        <label htmlFor='adults' className='form-label'>Adultos *</label>
+                                                        <Select
+                                                            className='form-control-select'
+                                                            defaultValue={{ value: '1', label: '1' }}
+                                                            options={numberPassengersAdult}
+                                                            name='adults'
+                                                            id='adults'
+                                                        />
+                                                        <span className='message-error'>Campo obligatorio</span>
+                                                    </div>
+                                                    <div className='form-group'>
+                                                        <label htmlFor='children' className='form-label'>Niños <small>(3 a 11 años)</small></label>
+                                                        <Select
+                                                            className='form-control-select'
+                                                            defaultValue={{ value: '', label: '0' }}
+                                                            isOptionDisabled={(option) => option.isDisabled}
+                                                            options={numberPassengersBaby}
+                                                            name='children'
+                                                            id='children'
+                                                        />
+                                                        <span className='message-error'>Campo obligatorio</span>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                         <div className='form-group'>
@@ -208,7 +287,7 @@ const Home = () => {
                                             />
                                             {errors.destinationLocationCodeMessage && <span className='message-error error'>{errors.destinationLocationCodeMessage}</span>}
                                         </div>
-                                        <div className='form-group'>
+                                        <div className='form-group' id='departureDate-content'>
                                             <label htmlFor='departureDate' className='form-label'>FECHA IDA *</label>
                                             <div className='form-flatpickr'>
                                                 <Flatpickr
@@ -228,51 +307,30 @@ const Home = () => {
                                             </div>
                                             {errors.departureDateMessage && <span className='message-error error'>{errors.departureDateMessage}</span>}
                                         </div>
-                                        <div className='form-group'>
-                                            <label htmlFor='returnDate' className='form-label'>FECHA REGRESO</label>
-                                            <div className='form-flatpickr'>
-                                                <Flatpickr
-                                                    className='form-control flatpickr-date'
-                                                    value={values.arrivalDate}
-                                                    options={{
-                                                        enableTime: false,
-                                                        dateFormat: "l, d M",
-                                                        locale: Spanish
-                                                    }}
-                                                    name='returnDate'
-                                                    id='returnDate'
-                                                    onChange={(val) => (values.arrivalDate = val)}
-                                                />
-                                                <div className='form-flatpickr__icon'>
-                                                    <span className='material-icons'>calendar_today</span>
-                                                </div>
-                                            </div>
-                                            {errors.arrivalDateMessage && <span className='message-error error'>{errors.arrivalDateMessage}</span>}
-                                            {errors.arrivalDateHigherMessage && <span className='message-error error'>{errors.arrivalDateHigherMessage}</span>}
-                                        </div>
-                                        <div className='form-group'>
-                                            <label htmlFor='adults' className='form-label'>Adultos *</label>
-                                            <Select
-                                                className='form-control-select'
-                                                defaultValue={{ value: '1', label: '1' }}
-                                                options={numberPassengersAdult}
-                                                name='adults'
-                                                id='adults'
-                                            />
-                                            <span className='message-error'>Campo obligatorio</span>
-                                        </div>
-                                        <div className='form-group'>
-                                            <label htmlFor='children' className='form-label'>Niños <small>(3 a 11 años)</small></label>
-                                            <Select
-                                                className='form-control-select'
-                                                defaultValue={{ value: '', label: '0' }}
-                                                isOptionDisabled={(option) => option.isDisabled}
-                                                options={numberPassengersBaby}
-                                                name='children'
-                                                id='children'
-                                            />
-                                            <span className='message-error'>Campo obligatorio</span>
-                                        </div>
+                                        {
+                                            show ?
+                                                <div className='form-group' id='returnDate-content'>
+                                                    <label htmlFor='returnDate' className='form-label'>FECHA REGRESO</label>
+                                                    <div className='form-flatpickr'>
+                                                        <Flatpickr
+                                                            className='form-control flatpickr-date'
+                                                            value={values.arrivalDate}
+                                                            options={{
+                                                                enableTime: false,
+                                                                dateFormat: "l, d M",
+                                                                locale: Spanish
+                                                            }}
+                                                            name='returnDate'
+                                                            id='returnDate'
+                                                        />
+                                                        <div className='form-flatpickr__icon'>
+                                                            <span className='material-icons'>calendar_today</span>
+                                                        </div>
+                                                    </div>
+                                                    {errors.arrivalDateMessage && <span className='message-error error'>{errors.arrivalDateMessage}</span>}
+                                                    {errors.arrivalDateHigherMessage && <span className='message-error error'>{errors.arrivalDateHigherMessage}</span>}
+                                                </div> : null
+                                        }
                                         <div className='form-group col-span-2 text-right'>
                                             <button type="submit" className='btn btn-search'>
                                                 <span className='material-icons'>search</span>
