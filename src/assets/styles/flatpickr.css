@@ -112,7 +112,7 @@
     border-bottom-color: #e6e6e6;
   }
   .flatpickr-calendar.arrowTop:after {
-    border-bottom-color: #fff;
+    border-bottom-color: var(--blue-color);
   }
   .flatpickr-calendar.arrowBottom:before,
   .flatpickr-calendar.arrowBottom:after {
@@ -122,7 +122,7 @@
     border-top-color: #e6e6e6;
   }
   .flatpickr-calendar.arrowBottom:after {
-    border-top-color: #fff;
+    border-top-color: var(--blue-color);
   }
   .flatpickr-calendar:focus {
     outline: 0;
