@@ -239,6 +239,7 @@ h6 {
     transition: all 0.3s ease;
     min-width: 246px;
     position: absolute;
+    top: 102%;
     z-index: 2;
 }
 .dropdown-content.show {
