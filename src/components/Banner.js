@@ -4,7 +4,7 @@ export const Banner = ({ title }) => {
     return (
         <header className="banner-z">
             <div className='container mx-auto'>
-                <div className='banner-z__content flex justify-start items-center' style={
+                <div className='banner-z__content flex justify-start items-center container-small' style={
             {
                 backgroundImage: `url(${banner})`,
                 backgroundRepeat: 'no-repeat',

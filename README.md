@@ -1,4 +1,4 @@
-# PROYECTO FINAL BOOTCAMP - RESERVA DE VUELO
+# PROYECTO FINAL - RESERVA DE VUELO (BOOTCAMP)
 
 ## DESARROLLADOR
 
@@ -6,15 +6,16 @@
 
 ## TECNOLOGÍAS
 
-- HTML5
-- CSS3 (TAILWIND V3.1)
-- REACTJS (JAVASCRIPT ES6)
+1. HTML5
+2. CSS3 (TAILWIND V3.1)
+3. REACTJS (JAVASCRIPT ES6)
+4. FIGMA (MOCKUP)
 
->> Uso de bundler
->> Manejador de estado global
->> Hook
->> Formik
->> Fetch
->> Deployment
+## TEMAS
 
-- GIT & GITHUB
+- [x] Uso de bundler
+- [ ] Manejador de estado global
+- [ ] Hook
+- [x] Formik
+- [x] Fetch
+- [ ] Deployment
