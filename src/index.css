@@ -103,8 +103,9 @@ h6 {
 }
 .message-error {
   display: none;
-  font-size: 12px;
   color: var(--error-message-form-color);
+  font-size: 10px;
+  margin-top: 1px;
 }
 .message-error.error {
   display: block;
@@ -116,6 +117,133 @@ h6 {
 }
 
 /**********************
+* Form control radio
+**********************/
+.form-control-radio {
+  display: flex;
+}
+.form-control-radio input[type="radio"] {
+  display: none;
+}
+.form-control-radio label[for="opt-return-date"],
+.form-control-radio label[for="opt-departure-date"] {
+  margin-right: 10px;
+}
+.form-control-radio .form-label {
+  cursor: pointer;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  border-radius: 5px;
+  padding: 8px 10px;
+  border: 1px solid lightgrey;
+  transition: all 0.3s ease;
+}
+.form-control-radio .form-control-radio__dot {
+  position: relative;
+  height: 20px;
+  width: 20px;
+  background-color: var(--control-form-color);
+  border-radius: 50%;
+  margin-right: 8px;
+}
+.form-control-radio .form-control-radio__dot::before {
+  content: "";
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  background-color: #0069d9;
+  border-radius: 50%;
+  opacity: 0;
+  transform: scale(1.5);
+  transition: all 0.3s ease;
+}
+.form-control-radio
+  input[id="opt-departure-date"]:checked:checked
+  ~ label[for="opt-departure-date"],
+.form-control-radio
+  input[id="opt-return-date"]:checked:checked
+  ~ label[for="opt-return-date"] {
+  border-color: #0069d9;
+  background: #0069d9;
+}
+.form-control-radio
+  input[id="opt-departure-date"]:checked:checked
+  ~ label[for="opt-departure-date"]
+  .form-control-radio__dot,
+.form-control-radio
+  input[id="opt-return-date"]:checked:checked
+  ~ label[for="opt-return-date"]
+  .form-control-radio__dot {
+  background: #fff;
+}
+.form-control-radio
+  input[id="opt-departure-date"]:checked:checked
+  ~ label[for="opt-departure-date"]
+  .form-control-radio__dot::before,
+.form-control-radio
+  input[id="opt-return-date"]:checked:checked
+  ~ label[for="opt-return-date"]
+  .form-control-radio__dot::before {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.form-control-radio
+  input[id="opt-departure-date"]:checked:checked
+  ~ label[for="opt-departure-date"]
+  span,
+.form-control-radio
+  input[id="opt-return-date"]:checked:checked
+  ~ label[for="opt-return-date"]
+  span {
+  color: #fff;
+}
+
+/**********************
+* Form control dropdown
+**********************/
+.form-control-dropdown {
+    position: relative;
+}
+.dropdown{
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 8px 10px;
+    border: 1px solid lightgrey;
+    transition: all 0.3s ease;
+}
+.dropdown .label {
+    font-size: 12px;
+    padding: 0 2px;
+}
+.dropdown span {
+    vertical-align: middle;
+}
+.dropdown-content {
+    display: none;
+    cursor: pointer;
+    background-color: var(--white-color);
+    box-shadow: 0 1px 3px 0 rgb(60 64 67 / 30%), 0 4px 8px 3px rgb(60 64 67 / 15%);
+    border-radius: 5px;
+    padding: 8px 10px;
+    border: 1px solid lightgrey;
+    transition: all 0.3s ease;
+    min-width: 246px;
+    position: absolute;
+    z-index: 2;
+}
+.dropdown-content.show {
+    display: block;
+}
+.dropdown-content label {
+    font-size: 11px;
+}
+
+/********************** 
 * Buttons
 **********************/
 .btn {
@@ -224,12 +352,14 @@ h6 {
 * Search flight
 **********************/
 .search-flight {
+  max-width: 992px;
+  margin: 0 auto;
   margin-top: -240px;
   position: relative;
   z-index: 10;
 }
 .search-flight h2 {
-	color: var(--white-color);
+  color: var(--white-color);
 }
 
 /**********************
@@ -286,5 +416,5 @@ h6 {
   transform: translateY(-50%);
 }
 .form-flatpickr .form-flatpickr__icon .material-icons {
-	color: #cbcbcb;
+  color: #cbcbcb;
 }
