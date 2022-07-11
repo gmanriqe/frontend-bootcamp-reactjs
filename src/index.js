@@ -1,6 +1,7 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import './assets/styles/fonts.css'; // fonts
+// import './assets/styles/flatpickr.css'; // flatpickr
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';

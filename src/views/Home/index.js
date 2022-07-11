@@ -1,25 +1,25 @@
 // 1ero: Paquetes de terceros
-import 'flatpickr/dist/themes/material_green.css';
+// import "flatpickr/dist/flatpickr.css";
 import Select from 'react-select'
 import Flatpickr from 'react-flatpickr'; // flatpickr
 import dayjs from 'dayjs'; // dayjs
 import { useEffect, useState } from 'react';
 import { Spanish } from 'flatpickr/dist/l10n/es.js'; // configure language for flatpickr
 // import { useNavigate } from 'react-router'
-import { Formik } from 'formik';
+import { Formik, Form } from 'formik';
 
 // 2do: Paquetes de mi propio proyecto
 import { Banner } from '../../components/Banner';
 import { Paises as paises } from '../../mock/Country';
 import { formData } from '../../mock/Token';
-import { useRef } from 'react';
 dayjs.locale('es')
 
 const Home = () => {
-
     // const navigate = useNavigate()
+    const [totalAdults, setTotalAdults] = useState(1)
+    const [totalChildren, setTotalChildren] = useState(0)
 
-    const [show, setShow] = useState(true)
+    const [optTypeFlight, setOptTypeFlight] = useState(false)
     const [token, setToken] = useState(null);
 
     useEffect(() => {
@@ -94,7 +94,6 @@ const Home = () => {
         })
     }
 
-
     /*
     const handlerSubmitMainSearch = async (evt) => {
         evt.preventDefault();
@@ -116,6 +115,11 @@ const Home = () => {
     }
     */
 
+    const handleDropdown = () => {
+        const $dropdown = document.getElementById('dropdown-content')
+        $dropdown.classList.toggle('show')
+    }
+
     /**
      * Radio buttons (ida y regreso / solo ida)
      */
@@ -125,37 +129,82 @@ const Home = () => {
 
         if (value === 'going-and-return') {
             $depatureDateContent.classList.remove('col-span-2')
-            setShow(true)
+            setOptTypeFlight(true)
         }
 
         if (value === 'only-going') {
-            setShow(false)
             $depatureDateContent.classList.add('col-span-2')
+            setOptTypeFlight(false)
         }
     }
 
     /**
-     * Cerrar dropdown cuando se hace click afuera
+     * Cerrar dropdown cuando se hace click afuera (Por implementar)
      */
-    const ref = useRef()
-    const [dropdownOpen, setDropdownOpen] = useState(false)
-    useEffect(() => {
-        const $dropdown = document.getElementById('dropdown-content')
-        $dropdown.classList.toggle('show')
 
-        const checkIfClickedOutside = e => {
-            // Si el menu está abierto y se hace click fuera del mismo, este será cerrado
-            if (dropdownOpen && ref.current && !ref.current.contains(e.target)) {
-                setDropdownOpen(false)
+    /**
+     * Formik validación
+     */
+    const validateOnlyGoing = (valores) => {
+        let errores = {};
+
+        // Validación de origen
+        if (!valores.originLocationCode.value) { // si no hay valor en el campo originLocationCode
+            errores.originLocationCodeMessage = '¿DESDE DÓNDE? es requerido';
+        }
+
+        // Validación de destino
+        if (valores.destinationLocationCode.value === '') {
+            errores.destinationLocationCodeMessage = '¿A DÓNDE QUIERE IR? es requerido';
+        }
+
+        // Validación de fecha de salida
+        if (valores.departureDate.length === 0) {
+            errores.departureDateMessage = 'FECHA IDA es requerida';
+        }
+
+        return errores
+
+    }
+
+    const validateGoingAndReturn = (valores) => {
+        let errores = {};
+
+        // Validación de origen
+        if (!valores.originLocationCode.value) { // si no hay valor en el campo originLocationCode
+            errores.originLocationCodeMessage = '¿DESDE DÓNDE? es requerido';
+        }
+
+        // Validación de destino
+        if (valores.destinationLocationCode.value === '') {
+            errores.destinationLocationCodeMessage = '¿A DÓNDE QUIERE IR? es requerido';
+        }
+
+        // Validación de fecha de salida
+        if (valores.departureDate.length === 0) {
+            errores.departureDateMessage = 'FECHA IDA es requerida';
+        }
+
+        // Validación de fecha de regreso
+        if (valores.arrivalDate.length === 0) {
+            errores.arrivalDateMessage = 'FECHA REGRESO es requerida';
+        } else {
+            // Validacion de fecha de regreso mayor a fecha de salida
+            if (Date.parse(valores.departureDate[0]) > Date.parse(valores.arrivalDate[0])) {
+                errores.arrivalDateHigherMessage = 'FECHA REGRESO debe ser mayor a la salida';
             }
         }
 
-        document.addEventListener("mousedown", checkIfClickedOutside)
-        return () => {
-            // limpiar el escuche del evento
-            document.removeEventListener("mousedown", checkIfClickedOutside)
-        }
-    }, [dropdownOpen])
+        return errores
+    }
+
+    const handleChangeAdults = (val) => {
+        setTotalAdults(val.value)
+    }
+
+    const handleChangeChildren = (val) => {
+        setTotalChildren(val.value)
+    }
 
     return (
         <>
@@ -171,71 +220,65 @@ const Home = () => {
                                     originLocationCode: { value: 'SCL', label: 'Chile - Comodoro Arturo Merino Benítez International Airport' },
                                     destinationLocationCode: { value: '', label: 'SELECCIONE...' },
                                     departureDate: new Date(),
-                                    arrivalDate: new Date(),
+                                    arrivalDate: '',
+                                    adults: { value: '1', label: '1' },
+                                    children: { value: '', label: '0' },
                                 }}
                                 // validaciones del formulario
                                 validate={(valores) => {
-                                    let errores = {};
-                                    console.log(valores.originLocationCode.value)
-                                    if (!valores.originLocationCode.value) { // si no hay valor en el campo originLocationCode
-                                        errores.originLocationCodeMessage = '¿DESDE DÓNDE? es requerido';
+                                    console.log(valores)
+                                    if (optTypeFlight === false) {
+                                        return validateOnlyGoing(valores);
                                     }
-                                    if (!valores.destinationLocationCode.value) {
-                                        errores.destinationLocationCodeMessage = '¿A DÓNDE QUIERE IR? es requerido';
+
+                                    if (optTypeFlight === true) {
+                                        return validateGoingAndReturn(valores);
                                     }
-                                    if (valores.departureDate.length === 0) {
-                                        errores.departureDateMessage = 'SALIDA es requerida';
-                                    }
-                                    if (valores.arrivalDate.length) {
-                                        console.log(valores.arrivalDate.length)
-                                        if (Date.parse(valores.departureDate) > Date.parse(valores.arrivalDate)) {
-                                            errores.arrivalDateHigherMessage = 'RETORNO debe ser mayor a la salida';
-                                        }
-                                    }
-                                    return errores;
+
+                                    // return errores;
                                 }}
                                 // se ejecuta cuando el formulario es enviado
                                 onSubmit={(valores) => {
                                     console.log(valores);
-                                    // console.log(valores.destinationLocationCode.value)
                                 }}
                             >
-                                {({ values, errors, handleSubmit }) => ( // {} es por la destructuracion
-                                    <form className='grid grid-cols-1 lg:grid-cols-2 gap-4' onSubmit={handleSubmit} >
+                                {/* {({ values, errors, handleSubmit }) => ( // {} es por la destructuracion */}
+                                {({ values, errors }) => ( // {} es por la destructuracion
+                                    <Form className='grid grid-cols-1 lg:grid-cols-2 gap-4' >
                                         <div className='form-group col-span-2 flex'>
                                             <div className='form-control-radio'>
                                                 <input
                                                     type='radio'
-                                                    id='opt-departure-date'
+                                                    id='opt-return-date'
                                                     name='opt-content-page'
-                                                    defaultChecked
+                                                    defaultValue='only-going'
                                                     onChange={handleChangeRadio}
-                                                    defaultValue='going-and-return'
+                                                    defaultChecked
                                                 />
                                                 <input
                                                     type='radio'
-                                                    id='opt-return-date'
+                                                    id='opt-departure-date'
                                                     name='opt-content-page'
+                                                    defaultValue='going-and-return'
                                                     onChange={handleChangeRadio}
-                                                    defaultValue='only-going'
                                                 />
-                                                <label htmlFor='opt-departure-date' className='form-label'>
-                                                    <div className='form-control-radio__dot'></div>
-                                                    <span>IDA Y REGRESO</span>
-                                                </label>
                                                 <label htmlFor='opt-return-date' className='form-label'>
                                                     <div className='form-control-radio__dot'></div>
                                                     <span>SOLO IDA</span>
                                                 </label>
+                                                <label htmlFor='opt-departure-date' className='form-label'>
+                                                    <div className='form-control-radio__dot'></div>
+                                                    <span>IDA Y REGRESO</span>
+                                                </label>
                                             </div>
-                                            <div className='form-control-dropdown' ref={ref}>
+                                            <div className='form-control-dropdown'>
                                                 <button
                                                     type="button"
                                                     className='dropdown'
-                                                    onClick={() => setDropdownOpen(oldState => !oldState)}
+                                                    onClick={() => handleDropdown()}
                                                 >
                                                     <span className="material-icons">person_4</span>
-                                                    <span className='label'>1</span>
+                                                    <span className='label'>{totalAdults + totalChildren}</span>
                                                     <span className="material-icons">arrow_drop_down</span>
                                                 </button>
                                                 <div className='dropdown-content' id="dropdown-content">
@@ -243,10 +286,10 @@ const Home = () => {
                                                         <label htmlFor='adults' className='form-label'>Adultos *</label>
                                                         <Select
                                                             className='form-control-select'
-                                                            defaultValue={{ value: '1', label: '1' }}
+                                                            defaultValue={values.adults}
                                                             options={numberPassengersAdult}
-                                                            name='adults'
                                                             id='adults'
+                                                            onChange={(val) => handleChangeAdults(val)}
                                                         />
                                                         <span className='message-error'>Campo obligatorio</span>
                                                     </div>
@@ -254,11 +297,11 @@ const Home = () => {
                                                         <label htmlFor='children' className='form-label'>Niños <small>(3 a 11 años)</small></label>
                                                         <Select
                                                             className='form-control-select'
-                                                            defaultValue={{ value: '', label: '0' }}
+                                                            defaultValue={values.children}
                                                             isOptionDisabled={(option) => option.isDisabled}
                                                             options={numberPassengersBaby}
-                                                            name='children'
                                                             id='children'
+                                                            onChange={(val) => handleChangeChildren(val)}
                                                         />
                                                         <span className='message-error'>Campo obligatorio</span>
                                                     </div>
@@ -287,11 +330,12 @@ const Home = () => {
                                             />
                                             {errors.destinationLocationCodeMessage && <span className='message-error error'>{errors.destinationLocationCodeMessage}</span>}
                                         </div>
-                                        <div className='form-group' id='departureDate-content'>
+                                        <div className='form-group col-span-2' id='departureDate-content'>
                                             <label htmlFor='departureDate' className='form-label'>FECHA IDA *</label>
                                             <div className='form-flatpickr'>
                                                 <Flatpickr
                                                     className='form-control'
+                                                    placeholder='SELECCIONE...'
                                                     value={values.departureDate}
                                                     options={{
                                                         enableTime: false,
@@ -299,7 +343,7 @@ const Home = () => {
                                                         locale: Spanish
                                                     }}
                                                     id='departureDate'
-                                                    onChange={(val) => (values.departureDate = val)}
+                                                    onChange={(val) => values.departureDate = val.length === 0 ? '' : new Date(new Date(val[0]).setHours(new Date().getHours(), new Date().getMinutes(), new Date().getSeconds()))}
                                                 />
                                                 <div className='form-flatpickr__icon'>
                                                     <span className='material-icons'>calendar_today</span>
@@ -308,20 +352,21 @@ const Home = () => {
                                             {errors.departureDateMessage && <span className='message-error error'>{errors.departureDateMessage}</span>}
                                         </div>
                                         {
-                                            show ?
+                                            optTypeFlight ?
                                                 <div className='form-group' id='returnDate-content'>
                                                     <label htmlFor='returnDate' className='form-label'>FECHA REGRESO</label>
                                                     <div className='form-flatpickr'>
                                                         <Flatpickr
                                                             className='form-control flatpickr-date'
+                                                            placeholder='SELECCIONE...'
                                                             value={values.arrivalDate}
                                                             options={{
                                                                 enableTime: false,
                                                                 dateFormat: "l, d M",
                                                                 locale: Spanish
                                                             }}
-                                                            name='returnDate'
                                                             id='returnDate'
+                                                            onChange={(val) => values.arrivalDate = val.length === 0 ? '' : new Date(new Date(val[0]).setHours(new Date().getHours(), new Date().getMinutes(), new Date().getSeconds()))}
                                                         />
                                                         <div className='form-flatpickr__icon'>
                                                             <span className='material-icons'>calendar_today</span>
@@ -337,7 +382,7 @@ const Home = () => {
                                                 <strong>Buscar</strong>
                                             </button>
                                         </div>
-                                    </form>
+                                    </Form>
                                 )}
                             </Formik>
                         </div>
