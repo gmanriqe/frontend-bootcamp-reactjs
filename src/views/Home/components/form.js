@@ -172,13 +172,6 @@ const MainFormSearch = ({ token }) => {
         setTotalChildren(val.value)
     }
 
-    /**
-     * 
-     */
-    // const handleSubmitMainOnlyGoing = () => {
-
-    // }
-
     return (
         <Formik
             // valores iniciales
@@ -220,7 +213,17 @@ const MainFormSearch = ({ token }) => {
 
                 // Ida y regreso
                 if (optTypeFlight === true) {
-                    // handleSubmitMainGoingAndReturn(valores)
+                    const dateDeparture = dayjs(new Date(valores.departureDate)).format('YYYY-MM-DD')
+                    const dateReturn = dayjs(new Date(valores.arrivalDate)).format('YYYY-MM-DD')
+                    const response = await fetch(`https://test.api.amadeus.com/v2/shopping/flight-offers?originLocationCode=${valores.originLocationCode.value}&destinationLocationCode=${valores.destinationLocationCode.value}&departureDate=${dateDeparture}&returnDate=${dateReturn}&adults=${valores.adults.value}`, {
+                        method: 'GET',
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    });
+
+                    const data = await response.json();
+                    dispatch(setListFlight(data.data))
                 }
             }}
 
