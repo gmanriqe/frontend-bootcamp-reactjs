@@ -13,8 +13,8 @@
 
 ## TEMAS
 
-- [x] Uso de bundler
-- [ ] Manejador de estado global
+- [x] Use de bundler
+- [ ] Redux (redux toolkit width redux-thunk)
 - [ ] Hook
 - [x] Formik
 - [x] Fetch
