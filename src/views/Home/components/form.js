@@ -1,6 +1,6 @@
 import Select from 'react-select'
 import Flatpickr from 'react-flatpickr'; // flatpickr
-// import dayjs from 'dayjs'; // dayjs
+import dayjs from 'dayjs'; // dayjs
 import { Spanish } from 'flatpickr/dist/l10n/es.js'; // configure language for flatpickr
 import { useState } from 'react';
 import { Formik, Form } from 'formik';
@@ -201,12 +201,13 @@ const MainFormSearch = ({ token }) => {
                 }
             }}
             // se ejecuta cuando el formulario es enviado
-            // https://codesandbox.io/s/github/formik/formik/tree/master/examples/async-submission?from-embed=&file=/index.js:466-478
+            // help: https://codesandbox.io/s/github/formik/formik/tree/master/examples/async-submission?from-embed=&file=/index.js:466-478
             onSubmit={async (valores) => {
+                console.log(valores)
                 // Solo ida
                 if (optTypeFlight === false) {
-                    // const response = await fetch(`https://test.api.amadeus.com/v2/shopping/flight-offers?originLocationCode=${listVal.originLocationCode.value}&destinationLocationCode=${listVal.destinationLocationCode.value}&departureDate=${dateVal1}&returnDate=${dateVal2}&adults=${listVal.adults.value}`, {
-                    const response = await fetch(`https://test.api.amadeus.com/v2/shopping/flight-offers?originLocationCode=LIM&destinationLocationCode=CUZ&departureDate=2022-07-13&adults=1`, {
+                    const dateDeparture = await dayjs(new Date(valores.departureDate)).format('YYYY-MM-DD')
+                    const response = await fetch(`https://test.api.amadeus.com/v2/shopping/flight-offers?originLocationCode=${valores.originLocationCode.value}&destinationLocationCode=${valores.destinationLocationCode.value}&departureDate=${dateDeparture}&adults=${valores.adults.value}`, {
                         method: 'GET',
                         headers: {
                             'Authorization': `Bearer ${token}`
