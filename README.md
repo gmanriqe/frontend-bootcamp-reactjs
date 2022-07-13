@@ -13,8 +13,8 @@
 
 ## TEMAS
 
-- [x] Uso de bundler
-- [ ] Redux (redux toolkit)
+- [x] Use de bundler
+- [ ] Redux (redux toolkit width redux-thunk)
 - [ ] Hook
 - [x] Formik
 - [x] Fetch
