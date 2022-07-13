@@ -19,10 +19,8 @@ export const flightSlice = createSlice(
 // console.log(createPost)
 
 // fetchingFlights deberá ternornar una función
-export const fetchingFlights = () => {
-    return () => {
-        
-    }
+export const fetchingFlights = () => () => {
+    
 }
 
 
