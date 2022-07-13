@@ -1,12 +1,9 @@
 // 1ero: Paquetes de terceros
-import { useNavigate } from "react-router-dom";
 
 // 2do: Paquetes de mi propio proyecto
 import { Banner } from "../../components/Banner";
 
 const Results = () => {
-    const navigate = useNavigate()
-
     const searchStorage = localStorage.getItem('search')
     const search = JSON.parse(searchStorage)
 
