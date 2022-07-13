@@ -1,16 +1,21 @@
+// 1ero: Paquetes de terceros
 import Select from 'react-select'
 import Flatpickr from 'react-flatpickr'; // flatpickr
 import dayjs from 'dayjs'; // dayjs
 import { Spanish } from 'flatpickr/dist/l10n/es.js'; // configure language for flatpickr
 import { useState } from 'react';
 import { Formik, Form } from 'formik';
-import { Paises as paises } from '../../../mock/Country';
 import { useDispatch } from 'react-redux';
 import { setListFlight } from '../../../redux/slices/flightSlice';
+import { useNavigate } from 'react-router-dom';
+
+// 2do: Paquetes de mi propio proyecto
+import { Paises as paises } from '../../../mock/Country';
 
 
 const MainFormSearch = ({ token }) => {
     const dispatch = useDispatch();
+    const navigate = useNavigate()
     const [optTypeFlight, setOptTypeFlight] = useState(false)
     const [totalAdults, setTotalAdults] = useState(1)
     const [totalChildren, setTotalChildren] = useState(0)
@@ -209,6 +214,7 @@ const MainFormSearch = ({ token }) => {
 
                     const data = await response.json();
                     dispatch(setListFlight(data.data))
+                    navigate(`/results`)
                 }
 
                 // Ida y regreso
@@ -224,6 +230,7 @@ const MainFormSearch = ({ token }) => {
 
                     const data = await response.json();
                     dispatch(setListFlight(data.data))
+                    navigate(`/results`)
                 }
             }}
 
