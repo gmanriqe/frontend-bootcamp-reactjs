@@ -1,16 +1,21 @@
+// 1ero: Paquetes de terceros
 import Select from 'react-select'
 import Flatpickr from 'react-flatpickr'; // flatpickr
-// import dayjs from 'dayjs'; // dayjs
+import dayjs from 'dayjs'; // dayjs
 import { Spanish } from 'flatpickr/dist/l10n/es.js'; // configure language for flatpickr
 import { useState } from 'react';
 import { Formik, Form } from 'formik';
-import { Paises as paises } from '../../../mock/Country';
 import { useDispatch } from 'react-redux';
 import { setListFlight } from '../../../redux/slices/flightSlice';
+import { useNavigate } from 'react-router-dom';
+
+// 2do: Paquetes de mi propio proyecto
+import { Paises as paises } from '../../../mock/Country';
 
 
 const MainFormSearch = ({ token }) => {
     const dispatch = useDispatch();
+    const navigate = useNavigate()
     const [optTypeFlight, setOptTypeFlight] = useState(false)
     const [totalAdults, setTotalAdults] = useState(1)
     const [totalChildren, setTotalChildren] = useState(0)
@@ -172,13 +177,6 @@ const MainFormSearch = ({ token }) => {
         setTotalChildren(val.value)
     }
 
-    /**
-     * 
-     */
-    // const handleSubmitMainOnlyGoing = () => {
-
-    // }
-
     return (
         <Formik
             // valores iniciales
@@ -201,12 +199,12 @@ const MainFormSearch = ({ token }) => {
                 }
             }}
             // se ejecuta cuando el formulario es enviado
-            // https://codesandbox.io/s/github/formik/formik/tree/master/examples/async-submission?from-embed=&file=/index.js:466-478
+            // help: https://codesandbox.io/s/github/formik/formik/tree/master/examples/async-submission?from-embed=&file=/index.js:466-478
             onSubmit={async (valores) => {
                 // Solo ida
                 if (optTypeFlight === false) {
-                    // const response = await fetch(`https://test.api.amadeus.com/v2/shopping/flight-offers?originLocationCode=${listVal.originLocationCode.value}&destinationLocationCode=${listVal.destinationLocationCode.value}&departureDate=${dateVal1}&returnDate=${dateVal2}&adults=${listVal.adults.value}`, {
-                    const response = await fetch(`https://test.api.amadeus.com/v2/shopping/flight-offers?originLocationCode=LIM&destinationLocationCode=CUZ&departureDate=2022-07-13&adults=1`, {
+                    const dateDeparture = await dayjs(new Date(valores.departureDate)).format('YYYY-MM-DD')
+                    const response = await fetch(`https://test.api.amadeus.com/v2/shopping/flight-offers?originLocationCode=${valores.originLocationCode.value}&destinationLocationCode=${valores.destinationLocationCode.value}&departureDate=${dateDeparture}&adults=${valores.adults.value}`, {
                         method: 'GET',
                         headers: {
                             'Authorization': `Bearer ${token}`
@@ -215,11 +213,23 @@ const MainFormSearch = ({ token }) => {
 
                     const data = await response.json();
                     dispatch(setListFlight(data.data))
+                    navigate(`/results`)
                 }
 
                 // Ida y regreso
                 if (optTypeFlight === true) {
-                    // handleSubmitMainGoingAndReturn(valores)
+                    const dateDeparture = dayjs(new Date(valores.departureDate)).format('YYYY-MM-DD')
+                    const dateReturn = dayjs(new Date(valores.arrivalDate)).format('YYYY-MM-DD')
+                    const response = await fetch(`https://test.api.amadeus.com/v2/shopping/flight-offers?originLocationCode=${valores.originLocationCode.value}&destinationLocationCode=${valores.destinationLocationCode.value}&departureDate=${dateDeparture}&returnDate=${dateReturn}&adults=${valores.adults.value}`, {
+                        method: 'GET',
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    });
+
+                    const data = await response.json();
+                    dispatch(setListFlight(data.data))
+                    navigate(`/results`)
                 }
             }}
 
