@@ -14,8 +14,8 @@
 ## TEMAS
 
 - [x] Use de bundler
-- [x] Redux (redux toolkit width redux-thunk) - manejador de estado global
-- [ ] Hooks - reusabled
+- [x] Redux (redux toolkit width redux-thunk) - global state handler
+- [ ] Hooks - reusable
 - [x] React Router V6
 - [x] Formik
 - [x] Fetch/Axios

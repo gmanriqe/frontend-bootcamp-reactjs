@@ -7,6 +7,7 @@
   --black-color: #000;
   --white-color: #fff;
   --icon-travel: #5f6368;
+  --icon-message-travel: #d56e0c;
   --control-form-color: #d9d9d9;
   --error-message-form-color: #ff0000;
 
@@ -308,6 +309,28 @@ h6 {
   background-color: var(--white-color);
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
   border-radius: 4px;
+}
+
+/**********************
+* Card Border
+**********************/
+.card-message {
+    background-color: var(--white-color);
+    border: 1px solid var(--control-form-color);
+    border-radius: 4px;
+    margin-top: 32px;
+    display: flex;
+    align-items: center;
+}
+.card-message .card-message__icon {
+    padding-right: 12px;
+    color: var(--icon-message-travel)
+}
+.card-message .card-message__text {
+    font-size: 14px;
+}
+.card-message .card-message__link {
+    color: var(--blue-color);
 }
 
 /**********************
