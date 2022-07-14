@@ -200,36 +200,64 @@ const MainFormSearch = ({ token }) => {
             }}
             // se ejecuta cuando el formulario es enviado
             // help: https://codesandbox.io/s/github/formik/formik/tree/master/examples/async-submission?from-embed=&file=/index.js:466-478
-            onSubmit={async (valores) => {
+            onSubmit={(valores) => {
                 // Solo ida
                 if (optTypeFlight === false) {
-                    const dateDeparture = await dayjs(new Date(valores.departureDate)).format('YYYY-MM-DD')
-                    const response = await fetch(`https://test.api.amadeus.com/v2/shopping/flight-offers?originLocationCode=${valores.originLocationCode.value}&destinationLocationCode=${valores.destinationLocationCode.value}&departureDate=${dateDeparture}&adults=${valores.adults.value}`, {
+                    const dateDeparture = dayjs(new Date(valores.departureDate)).format('YYYY-MM-DD')
+                    const myRequest = fetch(`https://test.api.amadeus.com/v2/shopping/flight-offers?originLocationCode=${valores.originLocationCode.value}&destinationLocationCode=${valores.destinationLocationCode.value}&departureDate=${dateDeparture}&adults=${valores.adults.value}`, {
                         method: 'GET',
                         headers: {
                             'Authorization': `Bearer ${token}`
                         }
                     });
-
-                    const data = await response.json();
-                    dispatch(setListFlight(data.data))
-                    navigate(`/results`)
+                    myRequest
+                        .then(function (response) {
+                            if (!response.ok) {
+                                throw new Error(response.statusText);
+                            }
+                            return response.json();
+                        })
+                        .then(function (data) {
+                            dispatch(setListFlight(data.data))
+                            navigate(`/results`)
+                        })
+                        .catch(function (error) {
+                            console.log(error)
+                        })
+                        .finally(() => console.log('finally'));
                 }
 
                 // Ida y regreso
                 if (optTypeFlight === true) {
                     const dateDeparture = dayjs(new Date(valores.departureDate)).format('YYYY-MM-DD')
                     const dateReturn = dayjs(new Date(valores.arrivalDate)).format('YYYY-MM-DD')
-                    const response = await fetch(`https://test.api.amadeus.com/v2/shopping/flight-offers?originLocationCode=${valores.originLocationCode.value}&destinationLocationCode=${valores.destinationLocationCode.value}&departureDate=${dateDeparture}&returnDate=${dateReturn}&adults=${valores.adults.value}`, {
+                    const myRequest = fetch(`https://test.api.amadeus.com/v2/shopping/flight-offers?originLocationCode=${valores.originLocationCode.value}&destinationLocationCode=${valores.destinationLocationCode.value}&departureDate=${dateDeparture}&returnDate=${dateReturn}&adults=${valores.adults.value}`, {
                         method: 'GET',
                         headers: {
                             'Authorization': `Bearer ${token}`
                         }
                     });
 
-                    const data = await response.json();
-                    dispatch(setListFlight(data.data))
-                    navigate(`/results`)
+                    myRequest
+                        .then(function (response) {
+                            if (!response.ok) {
+                                throw new Error(response.statusText);
+                            }
+                            return response.json();
+                        })
+                        .then(function (data) {
+                            dispatch(setListFlight(data.data))
+                            navigate(`/results`)
+                        })
+                        .catch(function (error) {
+                            console.log(error)
+                        })
+                        .finally(() => console.log('finally'));
+
+
+                    // const data = await response.json();
+                    // dispatch(setListFlight(data.data))
+                    // navigate(`/results`)
                 }
             }}
 
