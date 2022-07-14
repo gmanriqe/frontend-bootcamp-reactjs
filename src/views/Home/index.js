@@ -1,6 +1,5 @@
 // 1ero: Paquetes de terceros
 import { useEffect, useState } from 'react';
-// import { useNavigate } from 'react-router'
 
 // 2do: Paquetes de mi propio proyecto
 import { Banner } from '../../components/Banner';
@@ -9,7 +8,6 @@ import MainFormSearch from './components/form';
 
 
 const Home = () => {
-    // const navigate = useNavigate()
     const [token, setToken] = useState('');
 
     useEffect(() => {
@@ -27,23 +25,9 @@ const Home = () => {
         fetchAPISearch();
     }, [])
 
-    /*
-    const handleSubmitMainGoingAndReturn = async (listVal) => {
-        const dateVal1 = dayjs(new Date(listVal.departureDate)).format('YYYY-MM-DD')
-        const dateVal2 = dayjs(new Date(listVal.arrivalDate)).format('YYYY-MM-DD')
-        const response = await fetch(`https://test.api.amadeus.com/v2/shopping/flight-offers?originLocationCode=${listVal.originLocationCode.value}&destinationLocationCode=${listVal.destinationLocationCode.value}&departureDate=${dateVal1}&returnDate=${dateVal2}&adults=${listVal.adults.value}`, {
-            method: 'GET',
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        });
-
-        const data = await response.json();
-        localStorage.setItem('search', JSON.stringify(data))
-
-        navigate(`/results`)
+    const handlePageCovid = () => {
+        window.location.href = 'https://www.gob.pe/8736-coronavirus-informacion-para-viajeros';
     }
-    */
 
     return (
         <>
@@ -53,7 +37,16 @@ const Home = () => {
                     <div className='search-flight container-small'>
                         <h2 className="text-center">VUELOS</h2>
                         <div className='card p-sm'>
-                            <MainFormSearch token={token}/>
+                            <MainFormSearch token={token} />
+                        </div>
+                        <div className='card-message p-sm my-8'>
+                            <span className='material-icons card-message__icon'>info</span>
+                            <div>
+                                <h5>Aviso de viaje activo</h5>
+                                <p className='card-message__text'>Hay una recomendación de viaje del Gobierno relacionada con el coronavirus (COVID‑19). 
+                                    <a href='https://www.gob.pe/8736-coronavirus-informacion-para-viajeros' target='_blank' rel="noreferrer" className='card-message__link'> Más detalles</a>
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
