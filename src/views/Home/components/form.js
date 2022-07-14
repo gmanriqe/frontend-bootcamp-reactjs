@@ -253,11 +253,6 @@ const MainFormSearch = ({ token }) => {
                             console.log(error)
                         })
                         .finally(() => console.log('finally'));
-
-
-                    // const data = await response.json();
-                    // dispatch(setListFlight(data.data))
-                    // navigate(`/results`)
                 }
             }}
 
