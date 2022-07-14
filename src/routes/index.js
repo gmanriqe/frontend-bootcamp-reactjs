@@ -5,6 +5,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Home from '../views/Home';
 import Results from '../views/Results';
 import Detail from '../views/Detail';
+import Page404 from '../views/Page404';
 
 // recuerda este componente no tiene llaves, directo con parentesis
 const RoutesComponent = () => (
@@ -13,6 +14,7 @@ const RoutesComponent = () => (
             <Route path="/" element={<Home />} />
             <Route path="/results" element={<Results />} />
             <Route path="/detail/:id" element={<Detail />} />
+            <Route path="/page-404" element={<Page404 />} />
             <Route path="*" element={<div>404</div>} />
         </Routes>
     </BrowserRouter>

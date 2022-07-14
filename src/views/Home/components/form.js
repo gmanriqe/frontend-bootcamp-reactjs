@@ -201,7 +201,6 @@ const MainFormSearch = ({ token }) => {
             // se ejecuta cuando el formulario es enviado
             // help: https://codesandbox.io/s/github/formik/formik/tree/master/examples/async-submission?from-embed=&file=/index.js:466-478
             onSubmit={async (valores) => {
-                console.log(valores)
                 // Solo ida
                 if (optTypeFlight === false) {
                     const dateDeparture = await dayjs(new Date(valores.departureDate)).format('YYYY-MM-DD')
