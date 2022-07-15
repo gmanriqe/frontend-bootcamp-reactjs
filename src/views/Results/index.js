@@ -1,15 +1,20 @@
 // 1ero: Paquetes de terceros
-import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 // 2do: Paquetes de mi propio proyecto
 import { Banner } from "../../components/Banner";
 
+// RTK
+import { useSelector } from "react-redux";
+
 const Results = () => {
     const navigate = useNavigate()
-    const stateFlight = useSelector(state => state.flight);
+    
+    const stateFlight = useSelector(state => state.results.data);
+    const isLoading = useSelector(state => state.results.isLoading);
 
-    if (stateFlight.list.length === 0) {
+    console.log(isLoading)
+    if (stateFlight.length === 0) {
         setTimeout(() => {
             navigate('/')
         }, 6000)
@@ -21,11 +26,11 @@ const Results = () => {
             <section className='main main-results'>
                 <div className='container mx-auto'>
                     <div className='container-small pt-lg'>
-                        <p>Total resultados ({stateFlight.list.length})</p>
+                        <p>Total resultados ({stateFlight.length})</p>
                         <ul className='list-flight grid grid-cols-1'>
                             {
-                                stateFlight.list.length > 0
-                                    ? stateFlight.list.map((item, idx) => (
+                                stateFlight.length > 0
+                                    ? stateFlight.map((item, idx) => (
                                         <li key={idx} className='card-flight'>
                                             <div className="flex justify-between items-center">
                                                 <div className='card-flight__left flex'>

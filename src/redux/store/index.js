@@ -4,7 +4,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import reducers from "../reducers"; // reducer principal
 
-// configurando mi store
+// configuración de mi store
 export default configureStore({
     // ... your reducer (un reducer es la tipica "funcion" que actualiza un estado, tipo el setState de un componente)
     reducer: reducers,
