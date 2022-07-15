@@ -1,5 +1,8 @@
 // 1ero: Paquetes de terceros
 import { useNavigate } from "react-router-dom";
+import dayjs from 'dayjs'; // dayjs
+import { es } from "dayjs/locale/es";
+
 
 // 2do: Paquetes de mi propio proyecto
 import { Banner } from "../../components/Banner";
@@ -7,6 +10,7 @@ import { Banner } from "../../components/Banner";
 // RTK
 import { useSelector } from "react-redux";
 
+dayjs.locale('es');
 const Results = () => {
     const navigate = useNavigate()
     
@@ -18,6 +22,10 @@ const Results = () => {
         setTimeout(() => {
             navigate('/')
         }, 6000)
+    }
+
+    const handleFlightDetail = (id) => {
+        navigate(`/results/${id}`)
     }
 
     return (
@@ -38,12 +46,13 @@ const Results = () => {
                                                         <span className='material-icons'>local_airport</span>
                                                     </div>
                                                     <div className='card-flight__hours'>
-                                                        <p>{item.itineraries[0].duration.split('PT')[1].replace(/H/g, ' h ').replace(/M/g, ' min ')}</p>
-                                                        <span>{item.itineraries[0].segments[0].departure.iataCode} - {item.itineraries[0].segments[0].arrival.iataCode} ({item.itineraries[0].segments[0].numberOfStops === 0 ? 'Directo' : `${item.itineraries[0].segments[0].numberOfStops} Escala`})</span>
+                                                        <p>{item.itineraries[0].duration.split('PT')[1].replace(/H/g, ' hrs ').replace(/M/g, ' mins ')}</p>
+                                                        <div>{item.numberOfBookableSeats} Disponibles</div>
+                                                        <div>{dayjs(new Date(item.lastTicketingDate)).format('DD MMMM YYYY')} Último día de reserva</div>
                                                     </div>
                                                 </div>
                                                 <div className='card-flight__luggage'> {item.oneWay === true ? '' : <span className="material-icons">no_luggage</span>} <span>{item.price.grandTotal} {item.price.currency}</span></div>
-                                                <button className='card-flight__dropdown'>
+                                                <button className='card-flight__dropdown' title="VER DETALLE" data-id={item.id} onClick={() => handleFlightDetail(item.id)}>
                                                     <span className="material-icons">keyboard_arrow_down</span>
                                                 </button>
                                             </div>
