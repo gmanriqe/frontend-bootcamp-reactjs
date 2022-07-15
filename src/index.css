@@ -276,7 +276,8 @@ h6 {
 .btn strong {
   vertical-align: middle;
 }
-.btn span {
+.btn span,
+.btn em {
   margin-right: 4px;
 }
 .btn.btn-block {
@@ -288,6 +289,20 @@ h6 {
   background-color: var(--blue-color);
   border: 1px solid var(--blue-color);
   color: var(--white-color);
+}
+.btn.btn-search em {
+    display: none;
+}
+.btn.btn-search.btn-loading em {
+    display: inline-block;
+}
+.btn.btn-search.btn-loading span {
+    display: none;
+}
+/* btn disabled */
+.btn[disabled=disabled] {
+    background-color: var(--control-form-color);
+    border: 1px solid var(--control-form-color);
 }
 
 /**********************
@@ -452,4 +467,31 @@ h6 {
 }
 .form-flatpickr .form-flatpickr__icon .material-icons {
   color: #cbcbcb;
+}
+
+/**********************
+* Sweetalert2
+**********************/
+.swal-content .swal2-actions {
+    width: 100%;
+    justify-content: flex-end;
+}
+.swal-content .swal2-popup {
+    padding: 1rem 1rem;
+}
+.swal-content .swal2-confirm.swal2-styled {
+    background-color: var(--blue-color);
+    color: var(--white-color);
+}
+
+/**********************
+* Loading
+**********************/
+.loading {
+    width: 50px;
+    height: 50px;
+    border-top-color: transparent;
+    border-style: solid;
+    border-width: 3px;
+    border-radius: 50%;
 }
