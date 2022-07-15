@@ -5,20 +5,29 @@ import dayjs from 'dayjs'; // dayjs
 import { Spanish } from 'flatpickr/dist/l10n/es.js'; // configure language for flatpickr
 import { useState } from 'react';
 import { Formik, Form } from 'formik';
-import { useDispatch } from 'react-redux';
-import { setListFlight } from '../../../redux/slices/flightSlice';
+
 import { useNavigate } from 'react-router-dom';
 
 // 2do: Paquetes de mi propio proyecto
 import { Paises as paises } from '../../../mock/Country';
 
+// RTK
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchFlightStart, fetchFlightComplete, fetchFlightError } from '../../../redux/actions/results';
+// Sweetalert
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
 
+const MySwal = withReactContent(Swal);
 const MainFormSearch = ({ token }) => {
+    const navigate = useNavigate();
     const dispatch = useDispatch();
-    const navigate = useNavigate()
+
     const [optTypeFlight, setOptTypeFlight] = useState(false)
     const [totalAdults, setTotalAdults] = useState(1)
     const [totalChildren, setTotalChildren] = useState(0)
+
+    const isLoading = useSelector(state => state.results.isLoading)
 
     /**
      * Mock de paises
@@ -177,6 +186,28 @@ const MainFormSearch = ({ token }) => {
         setTotalChildren(val.value)
     }
 
+    /**
+     * Enable/Disable boton de busqueda
+     */
+    const enableSubmit = () => {
+        const $btnSearch = document.getElementById('btn-search')
+        $btnSearch.classList.remove('btn-loading')
+        $btnSearch.removeAttribute('disabled')
+    }
+
+    const disableSubmit = () => {
+        const $btnSearch = document.getElementById('btn-search')
+        $btnSearch.classList.add('btn-loading')
+        $btnSearch.setAttribute('disabled', 'disabled')
+    }
+
+    /**
+     * Loading boton
+     */
+    if (isLoading) {
+        disableSubmit()
+    }
+
     return (
         <Formik
             // valores iniciales
@@ -201,6 +232,7 @@ const MainFormSearch = ({ token }) => {
             // se ejecuta cuando el formulario es enviado
             // help: https://codesandbox.io/s/github/formik/formik/tree/master/examples/async-submission?from-embed=&file=/index.js:466-478
             onSubmit={(valores) => {
+                dispatch(fetchFlightStart());
                 // Solo ida
                 if (optTypeFlight === false) {
                     const dateDeparture = dayjs(new Date(valores.departureDate)).format('YYYY-MM-DD')
@@ -213,18 +245,31 @@ const MainFormSearch = ({ token }) => {
                     myRequest
                         .then(function (response) {
                             if (!response.ok) {
+                                console.log('------', response)
                                 throw new Error(response.statusText);
                             }
                             return response.json();
                         })
                         .then(function (data) {
-                            dispatch(setListFlight(data.data))
+                            dispatch(fetchFlightComplete(data.data))
                             navigate(`/results`)
                         })
                         .catch(function (error) {
-                            console.log(error)
+                            dispatch(fetchFlightError(error))
+                            MySwal.fire({
+                                text: 'Hemos tenido un problema con la búsqueda. Consulte con el administrador del sistema.',
+                                icon: 'warning',
+                                confirmButtonText: 'OK',
+                                showCloseButton: true, // icon cerrar
+                                allowOutsideClick: false, // click afuera no cierra
+                                allowEscapeKey: true, // keyup esc cierra
+                                customClass: {
+                                    container : 'swal-content',
+                                }, // nueva clase en el moda
+                            }).then((result) => {
+                                enableSubmit()
+                            })
                         })
-                        .finally(() => console.log('finally'));
                 }
 
                 // Ida y regreso
@@ -246,13 +291,13 @@ const MainFormSearch = ({ token }) => {
                             return response.json();
                         })
                         .then(function (data) {
-                            dispatch(setListFlight(data.data))
+                            dispatch(fetchFlightComplete(data.data))
                             navigate(`/results`)
                         })
                         .catch(function (error) {
-                            console.log(error)
+                            dispatch(fetchFlightError(error))
+                            enableSubmit()
                         })
-                        .finally(() => console.log('finally'));
                 }
             }}
 
@@ -393,7 +438,8 @@ const MainFormSearch = ({ token }) => {
                             </div> : null
                     }
                     <div className='form-group col-span-2 text-right'>
-                        <button type="submit" className='btn btn-search'>
+                        <button type="submit" className='btn btn-search' id="btn-search">
+                            <em className='material-icons animate-spin'>sync</em>
                             <span className='material-icons'>search</span>
                             <strong>Buscar</strong>
                         </button>

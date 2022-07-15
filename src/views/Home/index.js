@@ -6,7 +6,6 @@ import { clientCredential } from '../../config/config';
 import { Banner } from '../../components/Banner';
 import MainFormSearch from './components/form';
 
-
 const Home = () => {
     const [token, setToken] = useState('');
 
@@ -27,19 +26,17 @@ const Home = () => {
                     return response.json();
                 })
                 .then(function (data) {
-                    console.log(data)
                     setToken(data.access_token);
                 })
                 .catch(function (error) {
                     console.log(error);
                 })
-                .finally(() => console.log('finally'));
         }
         APIShowToken();
     }, [])
 
     return (
-        <>
+        <div className="main main-home">
             <Banner title='' />
             <section className='pt-lg'>
                 <div className='container mx-auto'>
@@ -60,7 +57,7 @@ const Home = () => {
                     </div>
                 </div>
             </section>
-        </>
+        </div>
     )
 }
 

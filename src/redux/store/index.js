@@ -1,14 +1,13 @@
 /**
- * Store & Reducer
+ * Store
  */
 import { configureStore } from "@reduxjs/toolkit";
-import flightReducer from "../redux/slices/flightSlice";
+import reducers from "../reducers"; // reducer principal
 
-export const store = configureStore({
-    reducer: {
-        flight: flightReducer,
-        // ... your reducer (un reducer es la tipica funcion que actualiza un estado, tipo el setState de un componente)
-    }
+// configuración de mi store
+export default configureStore({
+    // ... your reducer (un reducer es la tipica "funcion" que actualiza un estado, tipo el setState de un componente)
+    reducer: reducers,
 })
 
 /**
