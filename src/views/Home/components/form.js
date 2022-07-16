@@ -1,5 +1,6 @@
 // 1ero: Paquetes de terceros
-import Select from 'react-select'
+import Async from "react-select/async";
+import Select from "react-select";
 import Flatpickr from 'react-flatpickr'; // flatpickr
 import dayjs from 'dayjs'; // dayjs
 import { Spanish } from 'flatpickr/dist/l10n/es.js'; // configure language for flatpickr
@@ -9,7 +10,7 @@ import { Formik, Form } from 'formik';
 import { useNavigate } from 'react-router-dom';
 
 // 2do: Paquetes de mi propio proyecto
-import { Paises as paises } from '../../../mock/Country';
+// import { Paises as paises } from '../../../mock/Country';
 
 // RTK
 import { useDispatch, useSelector } from 'react-redux';
@@ -19,9 +20,142 @@ import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 
 const MySwal = withReactContent(Swal);
+
+const AsyncExample = ({ defaultOptionValue }) => {
+    const loadOptions = (searchKey) => {
+        const headers = {
+            'Content-Type': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest',
+            'Access-Control-Allow-Origin': '*',
+        }
+
+        const requestOptions = {
+            method: 'GET',
+            headers,
+        }
+
+        return new Promise((resolve) => {
+            //let myRequest = fetch('https://raw.githubusercontent.com/mwgg/Airports/master/airports.json', {
+            let myRequest = fetch('https://raw.githubusercontent.com/algolia/datasets/master/airports/airports.json', {
+                requestOptions
+            })
+            myRequest
+                .then(function (response) {
+                    if (!response.ok) {
+                        throw new Error(response.statusText);
+                    }
+                    return response.json();
+                })
+                .then(function (data) {
+                    console.log(data)
+                    let options = [{
+                        value: '',
+                        label: 'Seleccione una opción',
+                    }]
+                    Object.keys(data).forEach((key) => {
+                        // console.log(airports[key])
+                        options.push({
+                            value: data[key].icao,
+                            label: `${data[key].country} - ${data[key].city} - ${data[key].name}`
+                        })
+                    })                    
+                    resolve(options);
+                })
+        });
+    };
+
+    return (
+        <Async
+            loadOptions={loadOptions}
+            defaultOptions
+        />
+    );
+};
+
+/*
+useEffect(() => {
+
+    function APIShowAirport() {
+        const headers = {
+            'Content-Type': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest',
+            'Access-Control-Allow-Origin': '*',
+        }
+
+        const requestOptions = {
+            method: 'GET',
+            headers,
+        }
+
+        let myRequest = fetch('https://raw.githubusercontent.com/mwgg/Airports/master/airports.json', {
+            requestOptions
+        })
+        myRequest
+            .then(function (response) {
+                if (!response.ok) {
+                    throw new Error(response.statusText);
+                }
+                return response.json();
+            })
+            .then(function (data) {
+                console.log(data)
+                /*
+                let result = new Promise((resolve) => {
+                    
+                    Object.keys(data).forEach((key) => {
+                        // console.log(airports[key])
+                        optionsDeparture.push({
+                            value: data[key].icao,
+                            label: `${data[key].country} - ${data[key].state} - ${data[key].city} - ${data[key].name}`
+                        })
+                    })
+                    resolve(optionsDeparture)
+                });
+                result
+                    .then(function () {
+                        _setOptionsDeparture(optionsDeparture)
+                    })
+                
+                let optionsDeparture = [{
+                    value: '',
+                    label: 'SELECCIONE...',
+                    isDisabled: true
+                }]
+
+                Object.keys(data).forEach((key) => {
+                    // console.log(airports[key])
+                    optionsDeparture.push({
+                        value: data[key].icao,
+                        label: `${data[key].country} - ${data[key].state} - ${data[key].city} - ${data[key].name}`
+                    })
+                })
+
+                // _setOptionsDeparture(optionsDeparture)
+                _setOptionsDeparture([
+                    { value: "ocean", label: "Ocean" },
+                    { value: "blue", label: "Blue" },
+                    { value: "purple", label: "Purple" },
+                    { value: "red", label: "Red" },
+                    { value: "orange", label: "Orange" },
+                    { value: "yellow", label: "Yellow" },
+                    { value: "green", label: "Green" },
+                    { value: "forest", label: "Forest" },
+                    { value: "slate", label: "Slate" },
+                    { value: "silver", label: "Silver" }
+                ])
+            })
+    }
+    APIShowAirport()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+}, [])
+*/
+
 const MainFormSearch = ({ token }) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
+
+    // const [airports, setAirPorts] = useState([])
+    // const [_optionsDeparture, _setOptionsDeparture] = useState([])
 
     const [optTypeFlight, setOptTypeFlight] = useState(false)
     const [totalAdults, setTotalAdults] = useState(1)
@@ -32,42 +166,24 @@ const MainFormSearch = ({ token }) => {
     /**
      * Mock de paises
      */
-    const dataFilter = paises.filter((item) => {
-        return item.state === '1'
+
+    // const optionsArribal = [{
+    //     value: '',
+    //     label: 'SELECCIONE...',
+    //     isDisabled: true
+    // }]
+
+    /*
+    Object.keys(airports).forEach(function (key) {
+        // console.log(key, airports[key])
+        optionsArribal.push({
+            value: airports[key].icao,
+            label: `${airports[key].country} - ${airports[key].state} - ${airports[key].city} - ${airports[key].name}`
+        })
     })
 
-    const optionsDeparture = [
-        {
-            value: '',
-            label: 'SELECCIONE...',
-            isDisabled: true
-        }
-    ]
-
-    if (dataFilter.length > 0) {
-        dataFilter.map(item =>
-            optionsDeparture.push({
-                value: item.code,
-                label: `${item.countryName} - ${item.name}`
-            })
-        )
-    }
-
-    const optionsArribal = [
-        {
-            value: '',
-            label: 'SELECCIONE...',
-            isDisabled: true
-        }
-    ]
-    if (dataFilter.length > 0) {
-        dataFilter.map(item =>
-            optionsArribal.push({
-                value: item.code,
-                label: `${item.countryName} - ${item.name}`
-            })
-        )
-    }
+    console.log(optionsDeparture)
+    console.log(optionsArribal)*/
 
     const numberPassengersAdult = []
     for (let i = 1; i < 10; i++) {
@@ -245,7 +361,6 @@ const MainFormSearch = ({ token }) => {
                     myRequest
                         .then(function (response) {
                             if (!response.ok) {
-                                console.log('------', response)
                                 throw new Error(response.statusText);
                             }
                             return response.json();
@@ -264,7 +379,7 @@ const MainFormSearch = ({ token }) => {
                                 allowOutsideClick: false, // click afuera no cierra
                                 allowEscapeKey: true, // keyup esc cierra
                                 customClass: {
-                                    container : 'swal-content',
+                                    container: 'swal-content',
                                 }, // nueva clase en el moda
                             }).then((result) => {
                                 enableSubmit()
@@ -367,25 +482,34 @@ const MainFormSearch = ({ token }) => {
                             </div>
                         </div>
                     </div>
+                    {/* /////////////////////////////////////////// */}
                     <div className='form-group'>
                         <label htmlFor='originLocationCode' className='form-label'>¿Desde dónde? *</label>
-                        <Select
-                            className='form-control-select'
-                            defaultValue={values.originLocationCode}
-                            options={optionsDeparture}
-                            id='originLocationCode'
-                            onChange={(val) => (values.originLocationCode = val)}
+                        <Async
+                        // className='form-control-select'
+                        //defaultValue={values.originLocationCode}
+                        //options={optionsDeparture}
+                        // id='originLocationCode'
+                        //cacheOptions
+                        // defaultOptions = {}
+                        // loadOptions={() => (_optionsDeparture)}
+                        />
+                        <AsyncExample
+                            defaultOptionValue={"slate"}
                         />
                         {errors.originLocationCodeMessage && <span className='message-error error'>{errors.originLocationCodeMessage}</span>}
                     </div>
                     <div className='form-group'>
                         <label htmlFor='destinationLocationCode' className='form-label'>¿A dónde quiere ir? *</label>
-                        <Select
-                            className='form-control-select'
-                            defaultValue={values.destinationLocationCode}
-                            options={optionsArribal}
-                            id='destinationLocationCode'
-                            onChange={(val) => (values.destinationLocationCode = val)}
+                        <Async
+                        // className='form-control-select'
+                        // defaultValue={values.destinationLocationCode}
+                        // options={optionsArribal}
+                        // id='destinationLocationCode'
+                        // onChange={(val) => (values.destinationLocationCode = val)}
+                        //cacheOptions
+                        //defaultOptions
+
                         />
                         {errors.destinationLocationCodeMessage && <span className='message-error error'>{errors.destinationLocationCodeMessage}</span>}
                     </div>
