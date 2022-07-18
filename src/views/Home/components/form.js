@@ -199,7 +199,7 @@ const MainFormSearch = ({ token }) => {
             errores.destinationLocationCodeMessage = '¿A DÓNDE QUIERE IR? es requerido';
         }
 
-        // Validación de fecha de salida
+        // Validación fecha de ida
         if (valores.departureDate.length === 0) {
             errores.departureDateMessage = 'FECHA IDA es requerida';
         }
@@ -224,7 +224,7 @@ const MainFormSearch = ({ token }) => {
             errores.destinationLocationCodeMessage = '¿A DÓNDE QUIERE IR? es requerido';
         }
 
-        // Validación de fecha de salida
+        // Validación de fecha de id
         if (valores.departureDate.length === 0) {
             errores.departureDateMessage = 'FECHA IDA es requerida';
         }
@@ -233,8 +233,13 @@ const MainFormSearch = ({ token }) => {
         if (valores.arrivalDate.length === 0) {
             errores.arrivalDateMessage = 'FECHA REGRESO es requerida';
         } else {
-            // Validacion de fecha de regreso mayor a fecha de salida
-            if (Date.parse(valores.departureDate[0]) > Date.parse(valores.arrivalDate[0])) {
+            //Validación  fecha de ida debe ser mayor a fecha de regreso
+            let dateDepartureFormat = new Date(new Date(valores.departureDate).getFullYear(), new Date(valores.departureDate).getMonth(), new Date(valores.departureDate).getDate())
+            let dateArrivalFormat = new Date(new Date(valores.arrivalDate).getFullYear(), new Date(valores.arrivalDate).getMonth(), new Date(valores.arrivalDate).getDate())
+
+            // Para manejar la comparación de igualdad, usamos el objeto de fecha junto con el getTime()método de fecha que devuelve la cantidad de milisegundos. Pero si queremos comparar información específica como día, mes, etc., podemos usar otros métodos de fecha como getDate(), getHours(), getDay()y .getMonth()getYear()
+            // https://www.freecodecamp.org/news/javascript-date-comparison-how-to-compare-dates-in-js/
+            if (dateDepartureFormat.getTime() === dateArrivalFormat.getTime() || dateDepartureFormat.getTime() > dateArrivalFormat.getTime()) {
                 errores.arrivalDateHigherMessage = 'FECHA REGRESO debe ser mayor a la salida';
             }
         }
@@ -423,7 +428,7 @@ const MainFormSearch = ({ token }) => {
                             </button>
                             <div className='dropdown-content' id="dropdown-content">
                                 <div className='form-group'>
-                                    <label htmlFor='adults' className='form-label'>Adultos <small>(12 años a +)</small></label>
+                                    <label htmlFor='adults' className='form-label'>Adultos * <small>(12 años a +)</small></label>
                                     <Select
                                         className='form-control-select'
                                         defaultValue={values.adults}
