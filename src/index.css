@@ -316,6 +316,9 @@ h6 {
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
 }
+.list-flight .link-return-page{
+    color: var(--blue-color);
+}
 
 /**********************
 * Card
@@ -495,3 +498,14 @@ h6 {
     border-width: 3px;
     border-radius: 50%;
 }
+
+/**********************
+* 
+**********************/
+.widthout-result-img img {
+    max-width: 300px;
+    margin: 0 auto;
+    padding-top: 20px;
+}
+
+

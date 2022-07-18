@@ -1,11 +1,11 @@
 // 1ero: Paquetes de terceros
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import dayjs from 'dayjs'; // dayjs
-// import { es } from "dayjs/locale/es";
 
 
 // 2do: Paquetes de mi propio proyecto
 import { Banner } from "../../components/Banner";
+import stateError from '../../assets/images/results_0.svg'
 
 // RTK
 import { useSelector } from "react-redux";
@@ -21,7 +21,7 @@ const Results = () => {
     if (stateFlight.length === 0) {
         setTimeout(() => {
             navigate('/')
-        }, 6000)
+        }, 25000)
     }
 
     const handleFlightDetail = (id) => {
@@ -58,7 +58,12 @@ const Results = () => {
                                             </div>
                                         </li>
                                     ))
-                                    : <p>No hemos encontrados vuelos disponibles. Por favor, realice nueva busqueda.</p>
+                                    : <div>
+                                        <p>¡Vaya! No hay ningún resultado.<Link to='/' className='link-return-page'> Nueva búsqueda</Link></p>
+                                        <figure className='widthout-result-img'>
+                                            <img src={stateError} alt="No results" />
+                                        </figure>
+                                    </div>
                             }
                         </ul>
                     </div>
