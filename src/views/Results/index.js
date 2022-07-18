@@ -1,7 +1,7 @@
 // 1ero: Paquetes de terceros
 import { useNavigate } from "react-router-dom";
 import dayjs from 'dayjs'; // dayjs
-import { es } from "dayjs/locale/es";
+// import { es } from "dayjs/locale/es";
 
 
 // 2do: Paquetes de mi propio proyecto
@@ -47,13 +47,13 @@ const Results = () => {
                                                     </div>
                                                     <div className='card-flight__hours'>
                                                         <p>{item.itineraries[0].duration.split('PT')[1].replace(/H/g, ' hrs ').replace(/M/g, ' mins ')}</p>
-                                                        <div>{item.numberOfBookableSeats} Disponibles</div>
-                                                        <div>{dayjs(new Date(item.lastTicketingDate)).format('DD MMMM YYYY')} Último día de reserva</div>
+                                                        <div>{item.numberOfBookableSeats} <span>{Number(item.numberOfBookableSeats) === 1 ? 'Und.' : 'Unds.'} disponibles</span></div>
+                                                        <div><strong>{dayjs(new Date(item.lastTicketingDate)).format('DD MMMM YYYY')}</strong> <span>Último día de reserva</span></div>
                                                     </div>
                                                 </div>
                                                 <div className='card-flight__luggage'> {item.oneWay === true ? '' : <span className="material-icons">no_luggage</span>} <span>{item.price.grandTotal} {item.price.currency}</span></div>
                                                 <button className='card-flight__dropdown' title="VER DETALLE" data-id={item.id} onClick={() => handleFlightDetail(item.id)}>
-                                                    <span className="material-icons">keyboard_arrow_down</span>
+                                                    <span className="material-icons">chevron_right</span>
                                                 </button>
                                             </div>
                                         </li>

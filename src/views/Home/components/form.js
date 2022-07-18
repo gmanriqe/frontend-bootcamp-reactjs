@@ -3,13 +3,10 @@ import Select from 'react-select'
 import Flatpickr from 'react-flatpickr'; // flatpickr
 import dayjs from 'dayjs'; // dayjs
 import { Spanish } from 'flatpickr/dist/l10n/es.js'; // configure language for flatpickr
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Formik, Form } from 'formik';
 
 import { useNavigate } from 'react-router-dom';
-
-// 2do: Paquetes de mi propio proyecto
-import { Paises as paises } from '../../../mock/Country';
 
 // RTK
 import { useDispatch, useSelector } from 'react-redux';
@@ -17,6 +14,7 @@ import { fetchFlightStart, fetchFlightComplete, fetchFlightError } from '../../.
 // Sweetalert
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
+import sortArrayForName from '../../../utils/sortArrayForName';
 
 const MySwal = withReactContent(Swal);
 const MainFormSearch = ({ token }) => {
@@ -30,9 +28,71 @@ const MainFormSearch = ({ token }) => {
     const isLoading = useSelector(state => state.results.isLoading)
 
     /**
+     * Paises (PRUEBA 2)
+     */
+    const [originLocationCode, setOriginLocationCode] = useState({ value: 'LIM', label: 'Peru (Lima) - Jorge Chavez Intl' })
+    const [destinationLocationCode, setdestinationLocationCode] = useState({ value: '', label: 'Seleccione una opción'})
+    const [country, setCountry] = useState([])
+    const [country2, setCountry2] = useState([])
+
+    /**
+     * @param {options} options - Array de paises
+     */
+    const removingSelected = useCallback((options) => {
+        // Removiendo el pais que ya se haya seleccionado
+        let widthoutSelected = options.filter(option => option.value !== originLocationCode.value) // 'LIM' es el pais que se ha seleccionado por defecto
+        setCountry2(widthoutSelected)
+    }, [originLocationCode])
+
+    useEffect(() => {
+        const APIListPaises = () => {
+            const headers = {
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest',
+                'Access-Control-Allow-Origin': '*',
+            }
+
+            const requestOptions = {
+                method: 'GET',
+                headers,
+            }
+
+            let myRequest = fetch('https://raw.githubusercontent.com/algolia/datasets/master/airports/airports.json', {
+                requestOptions
+            })
+            myRequest
+                .then(function (response) {
+                    if (!response.ok) {
+                        throw new Error(response.statusText);
+                    }
+                    return response.json();
+                })
+                .then(function (data) {
+                    sortArrayForName(data, 'country')
+
+                    let options = [{
+                        value: '',
+                        label: 'Seleccione una opción',
+                    }]
+
+                    data.forEach((data) => {
+                        options.push({
+                            value: data.iata_code,
+                            label: `${data.country} (${data.city}) - ${data.name}`
+                        })
+                    })
+
+                    setCountry(options);
+                    removingSelected(options)
+                })
+        }
+        APIListPaises()
+    }, [removingSelected])
+
+    /**
      * Mock de paises
      */
-    const dataFilter = paises.filter((item) => {
+    const dataFilter = country.filter((item) => {
         return item.state === '1'
     })
 
@@ -212,8 +272,8 @@ const MainFormSearch = ({ token }) => {
         <Formik
             // valores iniciales
             initialValues={{
-                originLocationCode: { value: 'SCL', label: 'Chile - Comodoro Arturo Merino Benítez International Airport' },
-                destinationLocationCode: { value: '', label: 'SELECCIONE...' },
+                originLocationCode,
+                destinationLocationCode,
                 departureDate: new Date(),
                 arrivalDate: '',
                 adults: { value: '1', label: '1' },
@@ -245,7 +305,6 @@ const MainFormSearch = ({ token }) => {
                     myRequest
                         .then(function (response) {
                             if (!response.ok) {
-                                console.log('------', response)
                                 throw new Error(response.statusText);
                             }
                             return response.json();
@@ -263,9 +322,9 @@ const MainFormSearch = ({ token }) => {
                                 showCloseButton: true, // icon cerrar
                                 allowOutsideClick: false, // click afuera no cierra
                                 allowEscapeKey: true, // keyup esc cierra
-                                customClass: {
-                                    container : 'swal-content',
-                                }, // nueva clase en el moda
+                                customClass: { // nueva clase en el moda
+                                    container: 'swal-content',
+                                },
                             }).then((result) => {
                                 enableSubmit()
                             })
@@ -367,14 +426,20 @@ const MainFormSearch = ({ token }) => {
                             </div>
                         </div>
                     </div>
+                    {
+                        /*prueba*/
+                    }
                     <div className='form-group'>
                         <label htmlFor='originLocationCode' className='form-label'>¿Desde dónde? *</label>
                         <Select
                             className='form-control-select'
                             defaultValue={values.originLocationCode}
-                            options={optionsDeparture}
+                            options={country}
                             id='originLocationCode'
-                            onChange={(val) => (values.originLocationCode = val)}
+                            onChange={(val) => {
+                                values.originLocationCode = val
+                                setOriginLocationCode(val)
+                            }}
                         />
                         {errors.originLocationCodeMessage && <span className='message-error error'>{errors.originLocationCodeMessage}</span>}
                     </div>
@@ -383,9 +448,12 @@ const MainFormSearch = ({ token }) => {
                         <Select
                             className='form-control-select'
                             defaultValue={values.destinationLocationCode}
-                            options={optionsArribal}
+                            options={country2}
                             id='destinationLocationCode'
-                            onChange={(val) => (values.destinationLocationCode = val)}
+                            onChange={(val) => {
+                                values.destinationLocationCode = val
+                                setdestinationLocationCode(val)
+                            }}
                         />
                         {errors.destinationLocationCodeMessage && <span className='message-error error'>{errors.destinationLocationCodeMessage}</span>}
                     </div>
