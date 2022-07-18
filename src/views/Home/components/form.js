@@ -22,8 +22,9 @@ const MainFormSearch = ({ token }) => {
     const dispatch = useDispatch();
 
     const [optTypeFlight, setOptTypeFlight] = useState(false)
-    const [totalAdults, setTotalAdults] = useState(1)
-    const [totalChildren, setTotalChildren] = useState(0)
+    const [totalPersons, setTotalPersons] = useState(1)
+    const [selectedAdults, setSelectedAdults] = useState({ value: '1', label: '1' }) // valor que este seleccionado en adulto
+    const [selectedChildren, setSelectedChildren] = useState({ value: '', label: '0' }) // valor que este seleccionado en niños
 
     const isLoading = useSelector(state => state.results.isLoading)
 
@@ -239,11 +240,13 @@ const MainFormSearch = ({ token }) => {
     }
 
     const handleChangeAdults = (val) => {
-        setTotalAdults(val.value)
+        setSelectedAdults(val) // seteo del estado de los adultos
+        setTotalPersons(Number(selectedChildren.value) + Number(val.value))
     }
 
     const handleChangeChildren = (val) => {
-        setTotalChildren(val.value)
+        setSelectedChildren(val) // seteo del estado de los niños
+        setTotalPersons(Number(selectedAdults.value) + Number(val.value))
     }
 
     /**
@@ -276,8 +279,8 @@ const MainFormSearch = ({ token }) => {
                 destinationLocationCode,
                 departureDate: new Date(),
                 arrivalDate: '',
-                adults: { value: '1', label: '1' },
-                children: { value: '', label: '0' },
+                adults: selectedAdults,
+                children: selectedChildren,
             }}
             // validaciones del formulario
             validate={(valores) => {
@@ -396,18 +399,20 @@ const MainFormSearch = ({ token }) => {
                                 onClick={() => handleDropdown()}
                             >
                                 <span className="material-icons">person_4</span>
-                                <span className='label'>{totalAdults + totalChildren}</span>
+                                <span className='label'>{totalPersons}</span>
                                 <span className="material-icons">arrow_drop_down</span>
                             </button>
                             <div className='dropdown-content' id="dropdown-content">
                                 <div className='form-group'>
-                                    <label htmlFor='adults' className='form-label'>Adultos *</label>
+                                    <label htmlFor='adults' className='form-label'>Adultos <small>(12años a +)</small></label>
                                     <Select
                                         className='form-control-select'
                                         defaultValue={values.adults}
                                         options={numberPassengersAdult}
                                         id='adults'
-                                        onChange={(val) => handleChangeAdults(val)}
+                                        onChange={(val) => {
+                                            handleChangeAdults(val)                                            
+                                        }}
                                     />
                                     <span className='message-error'>Campo obligatorio</span>
                                 </div>
@@ -419,7 +424,9 @@ const MainFormSearch = ({ token }) => {
                                         isOptionDisabled={(option) => option.isDisabled}
                                         options={numberPassengersBaby}
                                         id='children'
-                                        onChange={(val) => handleChangeChildren(val)}
+                                        onChange={(val) => {
+                                            handleChangeChildren(val)
+                                        }}
                                     />
                                     <span className='message-error'>Campo obligatorio</span>
                                 </div>
