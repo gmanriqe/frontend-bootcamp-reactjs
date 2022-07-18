@@ -18,13 +18,15 @@ import sortArrayForName from '../../../utils/sortArrayForName';
 
 const MySwal = withReactContent(Swal);
 const MainFormSearch = ({ token }) => {
+    const URL_BASE = 'https://test.api.amadeus.com/v2/shopping/flight-offers'
+
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const [optTypeFlight, setOptTypeFlight] = useState(false)
     const [totalPersons, setTotalPersons] = useState(1)
     const [selectedAdults, setSelectedAdults] = useState({ value: '1', label: '1' }) // valor que este seleccionado en adulto
-    const [selectedChildren, setSelectedChildren] = useState({ value: '', label: '0' }) // valor que este seleccionado en niños
+    const [selectedChildren, setSelectedChildren] = useState({ value: 0, label: 0 }) // valor que este seleccionado en niños
 
     const isLoading = useSelector(state => state.results.isLoading)
 
@@ -32,7 +34,7 @@ const MainFormSearch = ({ token }) => {
      * Paises (PRUEBA 2)
      */
     const [originLocationCode, setOriginLocationCode] = useState({ value: 'LIM', label: 'Peru (Lima) - Jorge Chavez Intl' })
-    const [destinationLocationCode, setdestinationLocationCode] = useState({ value: '', label: 'Seleccione una opción'})
+    const [destinationLocationCode, setdestinationLocationCode] = useState({ value: '', label: 'Seleccione una opción' })
     const [country, setCountry] = useState([])
     const [country2, setCountry2] = useState([])
 
@@ -138,12 +140,12 @@ const MainFormSearch = ({ token }) => {
         })
     }
 
-    const numberPassengersBaby = [{
-        value: '',
+    const numberPassengersChildren = [{
+        value: 0,
         label: 0
     }]
     for (let i = 1; i < 10; i++) {
-        numberPassengersBaby.push({
+        numberPassengersChildren.push({
             value: i,
             label: i
         })
@@ -295,11 +297,20 @@ const MainFormSearch = ({ token }) => {
             // se ejecuta cuando el formulario es enviado
             // help: https://codesandbox.io/s/github/formik/formik/tree/master/examples/async-submission?from-embed=&file=/index.js:466-478
             onSubmit={(valores) => {
+                const { value } = selectedChildren
                 dispatch(fetchFlightStart());
                 // Solo ida
                 if (optTypeFlight === false) {
                     const dateDeparture = dayjs(new Date(valores.departureDate)).format('YYYY-MM-DD')
-                    const myRequest = fetch(`https://test.api.amadeus.com/v2/shopping/flight-offers?originLocationCode=${valores.originLocationCode.value}&destinationLocationCode=${valores.destinationLocationCode.value}&departureDate=${dateDeparture}&adults=${valores.adults.value}`, {
+
+                    // 4 valores minimos que se envian como parametro
+                    let url = new URL(`${URL_BASE}?originLocationCode=${valores.originLocationCode.value}&destinationLocationCode=${valores.destinationLocationCode.value}&departureDate=${dateDeparture}&adults=${valores.adults.value}`)
+                    let params = new URLSearchParams(url.search)
+                    
+                    // Si hay niños, se agrega como parametro
+                    if (value > 0) params.set('children', value)
+
+                    const myRequest = fetch(`${URL_BASE}?${params}`, {
                         method: 'GET',
                         headers: {
                             'Authorization': `Bearer ${token}`
@@ -338,7 +349,15 @@ const MainFormSearch = ({ token }) => {
                 if (optTypeFlight === true) {
                     const dateDeparture = dayjs(new Date(valores.departureDate)).format('YYYY-MM-DD')
                     const dateReturn = dayjs(new Date(valores.arrivalDate)).format('YYYY-MM-DD')
-                    const myRequest = fetch(`https://test.api.amadeus.com/v2/shopping/flight-offers?originLocationCode=${valores.originLocationCode.value}&destinationLocationCode=${valores.destinationLocationCode.value}&departureDate=${dateDeparture}&returnDate=${dateReturn}&adults=${valores.adults.value}`, {
+                    
+                    // 4 valores minimos que se envian como parametro
+                    let url = new URL(`${URL_BASE}?originLocationCode=${valores.originLocationCode.value}&destinationLocationCode=${valores.destinationLocationCode.value}&departureDate=${dateDeparture}&returnDate=${dateReturn}&adults=${valores.adults.value}`)
+                    let params = new URLSearchParams(url.search)
+                    
+                    // Si hay niños, se agrega como parametro
+                    if (value > 0) params.set('children', value)
+
+                    const myRequest = fetch(`${URL_BASE}?${params}`, {
                         method: 'GET',
                         headers: {
                             'Authorization': `Bearer ${token}`
@@ -404,14 +423,14 @@ const MainFormSearch = ({ token }) => {
                             </button>
                             <div className='dropdown-content' id="dropdown-content">
                                 <div className='form-group'>
-                                    <label htmlFor='adults' className='form-label'>Adultos <small>(12años a +)</small></label>
+                                    <label htmlFor='adults' className='form-label'>Adultos <small>(12 años a +)</small></label>
                                     <Select
                                         className='form-control-select'
                                         defaultValue={values.adults}
                                         options={numberPassengersAdult}
                                         id='adults'
                                         onChange={(val) => {
-                                            handleChangeAdults(val)                                            
+                                            handleChangeAdults(val)
                                         }}
                                     />
                                     <span className='message-error'>Campo obligatorio</span>
@@ -422,7 +441,7 @@ const MainFormSearch = ({ token }) => {
                                         className='form-control-select'
                                         defaultValue={values.children}
                                         isOptionDisabled={(option) => option.isDisabled}
-                                        options={numberPassengersBaby}
+                                        options={numberPassengersChildren}
                                         id='children'
                                         onChange={(val) => {
                                             handleChangeChildren(val)
