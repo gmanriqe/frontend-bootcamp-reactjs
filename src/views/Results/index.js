@@ -39,7 +39,7 @@ const Results = () => {
                             <p>Total resultados ({stateFlight.length})</p>
                             <Link to='/'><span class="material-icons icon-return">west</span></Link>
                         </div>
-                        <ul className='list-flight grid grid-cols-1'>
+                        <ul className={stateFlight.length === 0 ? 'list-flight list-flight--widthout-shadow grid grid-cols-1' : 'list-flight grid grid-cols-1'} >
                             {
                                 stateFlight.length > 0
                                     ? stateFlight.map((item, idx) => (
