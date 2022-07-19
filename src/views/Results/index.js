@@ -14,7 +14,7 @@ import { useSelector } from "react-redux";
 dayjs.locale('es');
 const Results = () => {
     const navigate = useNavigate()
-    
+
     const stateFlight = useSelector(state => state.results.data);
     const isLoading = useSelector(state => state.results.isLoading);
 
@@ -35,7 +35,10 @@ const Results = () => {
             <section className='main main-results'>
                 <div className='container mx-auto'>
                     <div className='container-small pt-lg'>
-                        <p>Total resultados ({stateFlight.length})</p>
+                        <div className='header-navigation'>
+                            <p>Total resultados ({stateFlight.length})</p>
+                            <Link to='/'><span class="material-icons icon-return">west</span></Link>
+                        </div>
                         <ul className='list-flight grid grid-cols-1'>
                             {
                                 stateFlight.length > 0
