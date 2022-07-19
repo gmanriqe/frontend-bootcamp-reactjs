@@ -82,8 +82,8 @@ h6 {
 * Container
 **********************/
 .container-small {
-    max-width: 992px;
-    margin: 0 auto;
+  max-width: 992px;
+  margin: 0 auto;
 }
 
 /**********************
@@ -216,46 +216,46 @@ h6 {
 * Form control dropdown
 **********************/
 .form-control-dropdown {
-    position: relative;
+  position: relative;
 }
-.dropdown{
-    border-radius: 5px;
-    cursor: pointer;
-    padding: 8px 10px;
-    border: 1px solid lightgrey;
-    /* transition: all 0.3s ease; */
+.dropdown {
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 8px 10px;
+  border: 1px solid lightgrey;
+  /* transition: all 0.3s ease; */
 }
 .dropdown:active,
 .dropdown:focus,
 .dropdown:target {
-    outline: 2px solid var(--blue-color);
+  outline: 2px solid var(--blue-color);
 }
 .dropdown .label {
-    font-size: 12px;
-    padding: 0 2px;
+  font-size: 12px;
+  padding: 0 2px;
 }
 .dropdown span {
-    vertical-align: middle;
+  vertical-align: middle;
 }
 .dropdown-content {
-    display: none;
-    cursor: pointer;
-    background-color: var(--white-color);
-    box-shadow: 0 1px 3px 0 rgb(60 64 67 / 30%), 0 4px 8px 3px rgb(60 64 67 / 15%);
-    border-radius: 5px;
-    padding: 8px 10px;
-    border: 1px solid lightgrey;
-    transition: all 0.3s ease;
-    min-width: 246px;
-    position: absolute;
-    top: 102%;
-    z-index: 2;
+  display: none;
+  cursor: pointer;
+  background-color: var(--white-color);
+  box-shadow: 0 1px 3px 0 rgb(60 64 67 / 30%), 0 4px 8px 3px rgb(60 64 67 / 15%);
+  border-radius: 5px;
+  padding: 8px 10px;
+  border: 1px solid lightgrey;
+  transition: all 0.3s ease;
+  min-width: 246px;
+  position: absolute;
+  top: 102%;
+  z-index: 2;
 }
 .dropdown-content.show {
-    display: block;
+  display: block;
 }
 .dropdown-content label {
-    font-size: 11px;
+  font-size: 11px;
 }
 
 /********************** 
@@ -291,18 +291,18 @@ h6 {
   color: var(--white-color);
 }
 .btn.btn-search em {
-    display: none;
+  display: none;
 }
 .btn.btn-search.btn-loading em {
-    display: inline-block;
+  display: inline-block;
 }
 .btn.btn-search.btn-loading span {
-    display: none;
+  display: none;
 }
 /* btn disabled */
-.btn[disabled=disabled] {
-    background-color: var(--control-form-color);
-    border: 1px solid var(--control-form-color);
+.btn[disabled="disabled"] {
+  background-color: var(--control-form-color);
+  border: 1px solid var(--control-form-color);
 }
 
 /**********************
@@ -316,8 +316,8 @@ h6 {
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
 }
-.list-flight .link-return-page{
-    color: var(--blue-color);
+.list-flight .link-return-page {
+  color: var(--blue-color);
 }
 
 /**********************
@@ -333,22 +333,22 @@ h6 {
 * Card Border
 **********************/
 .card-message {
-    background-color: var(--white-color);
-    border: 1px solid var(--control-form-color);
-    border-radius: 4px;
-    margin-top: 32px;
-    display: flex;
-    align-items: center;
+  background-color: var(--white-color);
+  border: 1px solid var(--control-form-color);
+  border-radius: 4px;
+  margin-top: 32px;
+  display: flex;
+  align-items: center;
 }
 .card-message .card-message__icon {
-    padding-right: 12px;
-    color: var(--icon-message-travel)
+  padding-right: 12px;
+  color: var(--icon-message-travel);
 }
 .card-message .card-message__text {
-    font-size: 14px;
+  font-size: 14px;
 }
 .card-message .card-message__link {
-    color: var(--blue-color);
+  color: var(--blue-color);
 }
 
 /**********************
@@ -385,10 +385,10 @@ h6 {
 }
 .card-flight__dropdown .material-icons {
   font-size: 28px;
-  width: 48px;
-  height: 48px;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
   border-radius: 50%;
-  line-height: 48px;
 }
 .card-flight__dropdown:hover .material-icons {
   background-color: var(--control-form-color);
@@ -404,6 +404,61 @@ h6 {
 }
 
 /**********************
+* Card Flight Detail
+**********************/
+.card-flight-detail {
+  border: 1px solid var(--control-form-color);
+  border-radius: 8px;
+  padding: 1rem 1rem 1rem 1rem;
+  position: relative;
+  margin-bottom: -1px;
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  align-items: center;
+}
+.card-flight-detail .card-flight-detail__image {
+  width: 100px;
+}
+.card-flight-detail .card-flight-detail__image img {
+  max-height: 20px;
+}
+.card-flight-detail .card-flight-detail__item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 18px;
+}
+.card-flight-detail .card-flight-detail__split {
+  width: 120px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+}
+.card-flight-detail .card-flight-detail__split div {
+  background-color: var(--control-form-color);
+  display: block;
+  width: 100%;
+  height: 2px;
+  position: relative;
+}
+.card-flight-detail .card-flight-detail__aircraft {
+    position: absolute;
+    right: 50%;
+    top: -16px;
+    transform: rotate(90deg) translate(0, -50%);
+    color: var(--icon-travel);
+}
+.card-flight-detail .card-flight-detail__total {
+  text-align: center;
+}
+.card-flight-detail .card-flight-detailt__numflight {
+  width: 100%;
+  font-size: 14px;
+}
+
+/**********************
 * Search flight
 **********************/
 .search-flight {
@@ -413,6 +468,22 @@ h6 {
 }
 .search-flight h2 {
   color: var(--white-color);
+}
+
+/**********************
+* Icon return
+**********************/
+.icon-return {
+  background-color: var(--blue-color);
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  color: var(--white-color);
+  border-radius: 50%;
+}
+.icon-return:hover {
+    opacity: 0.8;
 }
 
 /**********************
@@ -447,6 +518,16 @@ h6 {
 }
 
 /**********************
+* Header Navigation
+**********************/
+.header-navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 8px;
+}
+
+/**********************
 * React Select
 **********************/
 .form-control-select div[class*="ValueContainer"] {
@@ -476,36 +557,34 @@ h6 {
 * Sweetalert2
 **********************/
 .swal-content .swal2-actions {
-    width: 100%;
-    justify-content: flex-end;
+  width: 100%;
+  justify-content: flex-end;
 }
 .swal-content .swal2-popup {
-    padding: 1rem 1rem;
+  padding: 1rem 1rem;
 }
 .swal-content .swal2-confirm.swal2-styled {
-    background-color: var(--blue-color);
-    color: var(--white-color);
+  background-color: var(--blue-color);
+  color: var(--white-color);
 }
 
 /**********************
 * Loading
 **********************/
 .loading {
-    width: 50px;
-    height: 50px;
-    border-top-color: transparent;
-    border-style: solid;
-    border-width: 3px;
-    border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  border-top-color: transparent;
+  border-style: solid;
+  border-width: 3px;
+  border-radius: 50%;
 }
 
 /**********************
 * 
 **********************/
 .widthout-result-img img {
-    max-width: 300px;
-    margin: 0 auto;
-    padding-top: 20px;
+  max-width: 300px;
+  margin: 0 auto;
+  padding-top: 20px;
 }
-
-

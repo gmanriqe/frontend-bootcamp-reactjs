@@ -1,6 +1,7 @@
 // 1ero: Paquetes de terceros
 import { useNavigate, Link } from "react-router-dom";
-import dayjs from 'dayjs'; // dayjs
+// DAYJS
+import dayjs from 'dayjs';
 
 
 // 2do: Paquetes de mi propio proyecto
