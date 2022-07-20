@@ -13,7 +13,7 @@ const RoutesComponent = () => (
         <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/results" element={<Results />} />
-            <Route path="/detail/:id" element={<Detail />} />
+            <Route path="/results/:flightId" element={<Detail />} />
             <Route path="/page-404" element={<Page404 />} />
             <Route path="*" element={<div>404</div>} />
         </Routes>

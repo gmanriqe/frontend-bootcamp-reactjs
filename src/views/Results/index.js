@@ -1,7 +1,8 @@
 // 1ero: Paquetes de terceros
 import { useNavigate, Link } from "react-router-dom";
-import dayjs from 'dayjs'; // dayjs
-
+// DAYJS
+import dayjs from 'dayjs';
+import es from 'dayjs/locale/es'
 
 // 2do: Paquetes de mi propio proyecto
 import { Banner } from "../../components/Banner";
@@ -13,7 +14,7 @@ import { useSelector } from "react-redux";
 dayjs.locale('es');
 const Results = () => {
     const navigate = useNavigate()
-    
+
     const stateFlight = useSelector(state => state.results.data);
     const isLoading = useSelector(state => state.results.isLoading);
 
@@ -34,8 +35,11 @@ const Results = () => {
             <section className='main main-results'>
                 <div className='container mx-auto'>
                     <div className='container-small pt-lg'>
-                        <p>Total resultados ({stateFlight.length})</p>
-                        <ul className='list-flight grid grid-cols-1'>
+                        <div className='header-navigation'>
+                            <p>Total resultados: {stateFlight.length}</p>
+                            <Link to='/'><span className="material-icons icon-return">west</span></Link>
+                        </div>
+                        <ul className={stateFlight.length === 0 ? 'list-flight list-flight--widthout-shadow grid grid-cols-1' : 'list-flight grid grid-cols-1'} >
                             {
                                 stateFlight.length > 0
                                     ? stateFlight.map((item, idx) => (
@@ -46,9 +50,9 @@ const Results = () => {
                                                         <span className='material-icons'>local_airport</span>
                                                     </div>
                                                     <div className='card-flight__hours'>
-                                                        <p>{item.itineraries[0].duration.split('PT')[1].replace(/H/g, ' hrs ').replace(/M/g, ' mins ')}</p>
-                                                        <div>{item.numberOfBookableSeats} <span>{Number(item.numberOfBookableSeats) === 1 ? 'Und.' : 'Unds.'} disponibles</span></div>
-                                                        <div><strong>{dayjs(new Date(item.lastTicketingDate)).format('DD MMMM YYYY')}</strong> <span>Último día de reserva</span></div>
+                                                        <p><strong>{item.numberOfBookableSeats} {Number(item.numberOfBookableSeats) === 1 ? 'Und.' : 'Unds.'} disponibles </strong></p>
+                                                        <small>{item.itineraries[0].duration.split('PT')[1].replace(/H/g, ' hrs ').replace(/M/g, ' mins ')} Duración</small>
+                                                        <small>{dayjs(new Date(item.lastTicketingDate)).format('DD MMMM YYYY')} Último día de reserva</small>
                                                     </div>
                                                 </div>
                                                 <div className='card-flight__luggage'> {item.oneWay === true ? '' : <span className="material-icons">no_luggage</span>} <span>{item.price.grandTotal} {item.price.currency}</span></div>
