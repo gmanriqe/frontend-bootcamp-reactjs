@@ -4,6 +4,7 @@ import { useParams, Link } from "react-router-dom"
 import { useSelector } from 'react-redux';
 // DAYJS
 import dayjs from 'dayjs';
+import es from 'dayjs/locale/es'
 
 // 2do: Paquetes de mi propio proyecto
 import { Banner } from "../../components/Banner";
@@ -32,7 +33,7 @@ const Detail = () => {
 
     const renderHTMLDate = (value) => {
         let date = new Date(value)
-        let dateArrival = dayjs(date).format('DD-MMMM-YYYY')
+        let dateArrival = dayjs(date).format('DD MMMM YYYY')
         return `${dateArrival}`
     }
 
@@ -47,7 +48,7 @@ const Detail = () => {
                     <div className='container-small pt-lg'>
                         <div className='header-navigation'>
                             <p>Duración: {itineraries[0].duration.split('PT')[1].replace(/H/g, ' hrs ').replace(/M/g, ' mins ')}</p>
-                            <Link to='/results'><span class="material-icons icon-return">west</span></Link>
+                            <Link to='/results'><span className="material-icons icon-return">west</span></Link>
                         </div>
                         <div className='card-flight-detail'>
                             <div className='card-flight-detail__total'>
@@ -68,11 +69,10 @@ const Detail = () => {
                                                                 <p><strong>{item.departure.iataCode}</strong></p>
                                                                 <p><small>{renderHTMLDepartureHour(item.departure.at)}</small></p>
                                                                 <p><small>{renderHTMLDate(item.departure.at)}</small></p>
-                                                                <div>{itineraries[0].numberOfBookableSeats}</div>
                                                             </div>
                                                             <div className='card-flight-detail__split'>
                                                                 <div>
-                                                                    <span class="material-icons card-flight-detail__aircraft">local_airport</span>
+                                                                    <span className="material-icons card-flight-detail__aircraft">local_airport</span>
                                                                 </div>
                                                             </div>
                                                             <div className='card-flight-detail__info'>

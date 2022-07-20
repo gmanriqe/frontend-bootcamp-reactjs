@@ -404,11 +404,12 @@ h6 {
 .card-flight__image span {
   font-size: 2rem;
 }
-.card-flight__hours span {
-  font-size: 14px;
-}
 .card-flight__hours p {
-  font-weight: 600;
+    margin-bottom: 3px;
+}
+.card-flight__hours small {
+    display: block;
+    line-height: 16px;
 }
 
 /**********************
@@ -468,6 +469,10 @@ h6 {
 .card-flight-detail .card-flight-detailt__numflight {
   width: 100%;
   font-size: 14px;
+}
+.card-flight-detail .card-flight-detail__info p:nth-child(2),
+.card-flight-detail .card-flight-detail__info p:nth-child(3) {
+    line-height: 16px;
 }
 
 /**********************
