@@ -39,7 +39,7 @@ const Home = () => {
         <div className="main main-home">
             <Banner title='' />
             <section className='pt-lg'>
-                <div className='container mx-auto'>
+                <div className='sm:container px-4'>
                     <div className='search-flight container-small'>
                         <h2 className="text-center">VUELOS</h2>
                         <div className='card p-sm'>

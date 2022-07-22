@@ -44,8 +44,8 @@ const Detail = () => {
         <>
             <Banner title='ITINERARIO' />
             <section className='main main-detail'>
-                <div className='container mx-auto'>
-                    <div className='container-small pt-lg'>
+                <div className='sm:container px-4'>
+                    <div className='container-small pt-6 sm:pt-16'>
                         <div className='header-navigation'>
                             <p>Duración: {itineraries[0].duration.split('PT')[1].replace(/H/g, ' hrs ').replace(/M/g, ' mins ')}</p>
                             <Link to='/results'><span className="material-icons icon-return">west</span></Link>

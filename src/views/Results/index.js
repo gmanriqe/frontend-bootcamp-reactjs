@@ -33,8 +33,8 @@ const Results = () => {
         <>
             <Banner title='VUELOS DISPONIBLES' />
             <section className='main main-results'>
-                <div className='container mx-auto'>
-                    <div className='container-small pt-lg'>
+                <div className='sm:container px-4'>
+                    <div className='container-small pt-6 sm:pt-16'>
                         <div className='header-navigation'>
                             <p>Total resultados: {stateFlight.length}</p>
                             <Link to='/'><span className="material-icons icon-return">west</span></Link>

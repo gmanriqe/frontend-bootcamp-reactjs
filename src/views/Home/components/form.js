@@ -389,7 +389,8 @@ const MainFormSearch = ({ token }) => {
 
         >
             {({ values, errors }) => ( // {} es por la destructuracion
-                <Form className='grid grid-cols-1 lg:grid-cols-2 gap-4'>
+                // <Form className='grid grid-cols-1 lg:grid-cols-2 gap-4'>
+                <Form className='grid grid-cols-2 gap-2'>
                     <div className='form-group col-span-2 flex'>
                         <div className='form-control-radio'>
                             <input
@@ -457,10 +458,7 @@ const MainFormSearch = ({ token }) => {
                             </div>
                         </div>
                     </div>
-                    {
-                        /*prueba*/
-                    }
-                    <div className='form-group'>
+                    <div className='form-group col-span-2 md:col-span-1'>
                         <label htmlFor='originLocationCode' className='form-label'>¿Desde dónde? *</label>
                         <Select
                             className='form-control-select'
@@ -474,7 +472,7 @@ const MainFormSearch = ({ token }) => {
                         />
                         {errors.originLocationCodeMessage && <span className='message-error error'>{errors.originLocationCodeMessage}</span>}
                     </div>
-                    <div className='form-group'>
+                    <div className='form-group col-span-2 md:col-span-1'>
                         <label htmlFor='destinationLocationCode' className='form-label'>¿A dónde quiere ir? *</label>
                         <Select
                             className='form-control-select'
