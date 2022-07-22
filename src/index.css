@@ -14,6 +14,13 @@
   --text-font-family: "Lato", sans-serif;
   --title-font-family: "Montserrat", sans-serif;
   --button-font-family: "Montserrat", sans-serif;
+
+  --breakpoint-xs: 320px;
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+  --breakpoint-xxl: 1536px;
 }
 
 html {
@@ -144,26 +151,27 @@ h6 {
   justify-content: space-evenly;
   align-items: center;
   border-radius: 5px;
-  padding: 8px 10px;
+  padding: 2px 4px; 
   border: 1px solid lightgrey;
+  height: 34px;
   transition: all 0.3s ease;
 }
 .form-control-radio .form-control-radio__dot {
   position: relative;
-  height: 20px;
-  width: 20px;
+  height: 14px;
+  width: 14px;
   background-color: var(--control-form-color);
   border-radius: 50%;
-  margin-right: 8px;
+  margin-right: 4px;
 }
 .form-control-radio .form-control-radio__dot::before {
   content: "";
   display: inline-block;
-  width: 12px;
-  height: 12px;
+  width: 8px;
+  height: 8px;
   position: absolute;
-  top: 4px;
-  left: 4px;
+  top: 3px;
+  left: 3px;
   background-color: #0069d9;
   border-radius: 50%;
   opacity: 0;
@@ -200,7 +208,6 @@ h6 {
   opacity: 1;
   transform: scale(1);
 }
-
 .form-control-radio
   input[id="opt-departure-date"]:checked:checked
   ~ label[for="opt-departure-date"]
@@ -211,18 +218,43 @@ h6 {
   span {
   color: #fff;
 }
+.form-control-radio span {
+  font-size: 10px;
+  line-height: 12px;
+}
+@media screen and (min-width: 640px) {
+  .form-control-radio span {
+    font-size: 0.75rem;
+  }
+  .form-control-radio .form-control-radio__dot::before {
+    width: 12px;
+    height: 12px;
+    top: 4px;
+    left: 4px;
+  }
+  .form-control-radio .form-control-radio__dot {
+    height: 20px;
+    width: 20px;
+	margin-right: 8px;
+  }
+  .form-control-radio .form-label {
+	padding: 8px 10px;
+	height: 36px;
+  }
+}
 
-/**********************
-* Form control dropdown
-**********************/
+/********************** * Form control dropdown **********************/
 .form-control-dropdown {
   position: relative;
 }
 .dropdown {
   border-radius: 5px;
   cursor: pointer;
-  padding: 8px 10px;
+  padding: 2px 4px;
   border: 1px solid lightgrey;
+  height: 32px;
+  display: flex;
+  align-items: center;
   /* transition: all 0.3s ease; */
 }
 .dropdown:active,
@@ -231,7 +263,7 @@ h6 {
   outline: 2px solid var(--blue-color);
 }
 .dropdown .label {
-  font-size: 12px;
+  font-size: 0.5625rem;
   padding: 0 2px;
 }
 .dropdown span {
@@ -257,6 +289,15 @@ h6 {
 .dropdown-content label {
   font-size: 11px;
 }
+@media screen and (min-width: 640px) {
+  .dropdown {
+	height: 36px;
+	padding: 8px 10px;
+  }
+  .dropdown .label {
+	font-size: 0.75rem;
+  }
+}
 
 /********************** 
 * Buttons
@@ -264,7 +305,7 @@ h6 {
 .btn {
   color: var(--control-form-color);
   display: inline-block;
-  padding: 0.625rem 1rem;
+  padding: 4px 12px;
   font-family: "Lato", sans-serif;
   font-weight: 700;
   border: 1px solid var(--control-form-color);
@@ -274,11 +315,11 @@ h6 {
   opacity: 0.8;
 }
 .btn strong {
+	font-size: 12px;
   vertical-align: middle;
 }
-.btn span,
-.btn em {
-  margin-right: 4px;
+.btn span, .btn em {
+  margin-right: 2px;
 }
 .btn.btn-block {
   display: block;
@@ -304,17 +345,28 @@ h6 {
   background-color: var(--control-form-color);
   border: 1px solid var(--control-form-color);
 }
+@media screen and (min-width: 640px) {
+  .btn {
+	padding: 8px 16px;
+  }
+  .btn span, .btn em {
+	margin-right: 4px;
+  }
+  .btn strong {
+	font-size: 16px;
+  }
+}
 
 /**********************
 * List Flight
 **********************/
 .list-flight {
-    box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
-    border-radius: 8px;
+  box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+  border-radius: 8px;
 }
 .list-flight.list-flight--widthout-shadow {
-    box-shadow: none;
-    border-radius: 0;
+  box-shadow: none;
+  border-radius: 0;
 }
 .list-flight .card-flight:first-child {
   border-top-left-radius: 8px;
@@ -405,19 +457,19 @@ h6 {
   font-size: 2rem;
 }
 .card-flight__hours p {
-    margin-bottom: 3px;
+  margin-bottom: 3px;
 }
 .card-flight__hours small {
-    display: block;
-    line-height: 16px;
+  display: block;
+  line-height: 16px;
 }
 
 /**********************
 * Card Flight Detail
 **********************/
 .card-flight-detail {
-    box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
-    border-radius: 8px;
+  box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+  border-radius: 8px;
   border: 1px solid var(--control-form-color);
   border-radius: 8px;
   padding: 1rem 1rem 1rem 1rem;
@@ -457,11 +509,11 @@ h6 {
   position: relative;
 }
 .card-flight-detail .card-flight-detail__aircraft {
-    position: absolute;
-    right: 50%;
-    top: -16px;
-    transform: rotate(90deg) translate(0, -50%);
-    color: var(--icon-travel);
+  position: absolute;
+  right: 50%;
+  top: -16px;
+  transform: rotate(90deg) translate(0, -50%);
+  color: var(--icon-travel);
 }
 .card-flight-detail .card-flight-detail__total {
   text-align: center;
@@ -472,7 +524,7 @@ h6 {
 }
 .card-flight-detail .card-flight-detail__info p:nth-child(2),
 .card-flight-detail .card-flight-detail__info p:nth-child(3) {
-    line-height: 16px;
+  line-height: 16px;
 }
 
 /**********************
@@ -500,7 +552,7 @@ h6 {
   border-radius: 50%;
 }
 .icon-return:hover {
-    opacity: 0.8;
+  opacity: 0.8;
 }
 
 /**********************
@@ -538,17 +590,18 @@ h6 {
 * Header Navigation
 **********************/
 .header-navigation {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-bottom: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 8px;
 }
 
 /**********************
 * React Select
 **********************/
-.form-control-select div[class*="ValueContainer"] {
-  height: 42px;
+.form-control-select div[class*="ValueContainer"],
+.form-control-select div[class*="-control"] {
+	height: 42px;
 }
 
 /**********************
