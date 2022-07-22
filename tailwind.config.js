@@ -5,6 +5,17 @@ module.exports = {
     purge: ['./src/**/*.{html,js}'],
     darkMode: false,
     theme: {
+        screens: { // breackpoints
+            'ss': '320px',
+            'sm': '640px',
+            'md': '768px',
+            'lg': '1024px',
+            'xl': '1280px',
+            '2xl': '1536px'
+        },
+        container : {
+            center: true,
+        },
         extend: {
             fontFamily: {
                 lato: ['Lato', 'sans-serif'],
