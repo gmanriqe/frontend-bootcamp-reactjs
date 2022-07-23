@@ -65,7 +65,7 @@ const Detail = () => {
                                                     <figure className='card-flight-detail__image'>
                                                         <img src={renderIMAGECarrier(item.carrierCode)} alt={item.carrierCode} />
                                                     </figure>
-                                                    <div style={{ display: 'flex', 'flex-wrap': 'wrap' }}>
+                                                    <div style={{ display: 'flex'}}>
                                                         <div className='card-flight-detail__info'>
                                                             <p><strong>{item.departure.iataCode}</strong></p>
                                                             <p><small>{renderHTMLDepartureHour(item.departure.at)}</small></p>
