@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { Header } from '../../components/Header';
 import { Banner } from '../../components/Banner';
 import { clientCredential } from '../../config/config';
-import MainFormSearch from '../Home/components/Form';
+import MainFormSearch from './components/form';
 
 const Home = () => {
     const [token, setToken] = useState('');
