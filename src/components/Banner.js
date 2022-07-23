@@ -16,5 +16,5 @@ export const Banner = ({ title }) => {
                 </div>
             </div>
         </section>
-    )
+    );
 }

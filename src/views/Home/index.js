@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 
 // 2do: Paquetes de mi propio proyecto
-import Header from "../../components/Header";
+import { Header } from '../../components/Header';
 import { Banner } from '../../components/Banner';
 import { clientCredential } from '../../config/config';
 import MainFormSearch from './components/Form';
@@ -35,7 +35,7 @@ const Home = () => {
         }
         APIShowToken();
     }, [])
-
+    console.log(Header)
     return (
         <main className="main main-home">
             <Header />

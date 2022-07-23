@@ -7,7 +7,7 @@ import dayjs from 'dayjs';
 import es from 'dayjs/locale/es'
 
 // 2do: Paquetes de mi propio proyecto
-import Header from "../../components/Header";
+import { Header } from "../../components/Header";
 import { Banner } from "../../components/Banner";
 
 dayjs.locale('es');
@@ -18,7 +18,6 @@ const Detail = () => {
     let dataFilter = data.filter(item => item.id === flightId)
     const { itineraries } = dataFilter[0]
     const { grandTotal, currency } = dataFilter[0].price
-    console.log(itineraries)
 
     const renderHTMLDepartureHour = (value) => {
         let date = new Date(value)
@@ -65,7 +64,7 @@ const Detail = () => {
                                                     <figure className='card-flight-detail__image'>
                                                         <img src={renderIMAGECarrier(item.carrierCode)} alt={item.carrierCode} />
                                                     </figure>
-                                                    <div style={{ display: 'flex'}}>
+                                                    <div style={{ display: 'flex' }}>
                                                         <div className='card-flight-detail__info'>
                                                             <p><strong>{item.departure.iataCode}</strong></p>
                                                             <p><small>{renderHTMLDepartureHour(item.departure.at)}</small></p>

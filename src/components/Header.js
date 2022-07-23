@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 import logo from '../assets/images/logo_flight.png'
 
-const Header = () => {
+export const Header = () => {
     return (
         <header className='header'>
             <Link to='/'>
@@ -13,5 +13,3 @@ const Header = () => {
         </header>
     );
 }
-
-export default Header;
