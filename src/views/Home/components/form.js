@@ -497,7 +497,8 @@ const MainFormSearch = ({ token }) => {
                                     enableTime: false,
                                     dateFormat: 'l, d M',
                                     locale: Spanish,
-                                    minDate: "today"
+                                    minDate: "today",
+                                    disableMobile: "true"
                                 }}
                                 id='departureDate'
                                 onChange={(val) => values.departureDate = val.length === 0 ? '' : new Date(new Date(val[0]).setHours(new Date().getHours(), new Date().getMinutes(), new Date().getSeconds()))}
@@ -521,7 +522,8 @@ const MainFormSearch = ({ token }) => {
                                             enableTime: false,
                                             dateFormat: "l, d M",
                                             locale: Spanish,
-                                            minDate: "today"
+                                            minDate: "today",
+                                            disableMobile: "true"
                                         }}
                                         id='returnDate'
                                         onChange={(val) => values.arrivalDate = val.length === 0 ? '' : new Date(new Date(val[0]).setHours(new Date().getHours(), new Date().getMinutes(), new Date().getSeconds()))}
