@@ -66,7 +66,7 @@ h4 {
 }
 
 h5 {
-  font-size: 1.25rem; /* 20px */
+  font-size: 1.0625rem; /* 17px */
   line-height: 1.75rem; /* 28px */
 }
 
@@ -86,9 +86,12 @@ h6 {
 }
 
 @media screen and (min-width: 640px) {
-	h2 {
-		font-size: 2.25rem; /* 36px */
-	}
+  h2 {
+    font-size: 2.25rem; /* 36px */
+  }
+  h5 {
+    font-size: 1.25rem; /* 20px */
+  }
 }
 
 /**********************
@@ -429,7 +432,7 @@ h6 {
 **********************/
 .card-flight {
   border: 1px solid var(--control-form-color);
-  padding: 1rem 4rem 1rem 1rem;
+  padding: 8px 4rem 8px 8px;
   position: relative;
   margin-bottom: -1px;
 }
@@ -438,6 +441,9 @@ h6 {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.card-flight__luggage {
+    padding: 0 6px;
 }
 .card-flight__luggage .material-icons {
   font-size: 24px;
@@ -470,11 +476,17 @@ h6 {
   font-size: 2rem;
 }
 .card-flight__hours p {
+    font-size: 14px;
   margin-bottom: 3px;
 }
 .card-flight__hours small {
   display: block;
   line-height: 16px;
+}
+@media screen and (min-width: 640px) {
+  .card-flight {
+    padding: 1rem 4rem 1rem 1rem;
+  }
 }
 
 /**********************
@@ -597,6 +609,17 @@ h6 {
   .banner-z__content {
     height: 280px;
   }
+}
+
+/**********************
+* Header
+**********************/
+.header {
+  padding: 1rem;
+  background-color: var(--black-color);
+  height: 60px;
+  display: flex;
+  align-items: center;
 }
 
 /**********************
