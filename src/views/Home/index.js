@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { Header } from '../../components/Header';
 import { Banner } from '../../components/Banner';
 import { clientCredential } from '../../config/config';
-import MainFormSearch from './components/Form';
+import MainFormSearch from '../Home/components/Form';
 
 const Home = () => {
     const [token, setToken] = useState('');
@@ -35,7 +35,7 @@ const Home = () => {
         }
         APIShowToken();
     }, [])
-    console.log(Header)
+
     return (
         <main className="main main-home">
             <Header />
