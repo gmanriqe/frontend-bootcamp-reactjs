@@ -10,7 +10,6 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 // 2do: Paquetes de mi propio proyecto
-
 const container = document.getElementById('root');
 const root = createRoot(container);
 

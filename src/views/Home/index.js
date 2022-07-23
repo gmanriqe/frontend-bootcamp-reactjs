@@ -2,9 +2,10 @@
 import { useEffect, useState } from 'react';
 
 // 2do: Paquetes de mi propio proyecto
-import { clientCredential } from '../../config/config';
+import Header from "../../components/Header";
 import { Banner } from '../../components/Banner';
-import MainFormSearch from './components/form';
+import { clientCredential } from '../../config/config';
+import MainFormSearch from './components/Form';
 
 const Home = () => {
     const [token, setToken] = useState('');
@@ -36,10 +37,11 @@ const Home = () => {
     }, [])
 
     return (
-        <div className="main main-home">
+        <main className="main main-home">
+            <Header />
             <Banner title='' />
             <section className='pt-lg'>
-                <div className='sm:container px-4'>
+                <div className='sm:container px-4 pb-10'>
                     <div className='search-flight container-small'>
                         <h2 className="text-center">VUELOS</h2>
                         <div className='card p-sm'>
@@ -57,7 +59,7 @@ const Home = () => {
                     </div>
                 </div>
             </section>
-        </div>
+        </main>
     )
 }
 

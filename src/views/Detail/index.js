@@ -7,6 +7,7 @@ import dayjs from 'dayjs';
 import es from 'dayjs/locale/es'
 
 // 2do: Paquetes de mi propio proyecto
+import Header from "../../components/Header";
 import { Banner } from "../../components/Banner";
 
 dayjs.locale('es');
@@ -41,63 +42,62 @@ const Detail = () => {
         return require(`../../assets/images/carriers/${value}.png`)
     }
     return (
-        <>
+        <main className='main main-detail'>
+            <Header />
             <Banner title='ITINERARIO' />
-            <section className='main main-detail'>
-                <div className='sm:container px-4'>
-                    <div className='container-small pt-6 sm:pt-16'>
-                        <div className='header-navigation'>
-                            <p>Duración: {itineraries[0].duration.split('PT')[1].replace(/H/g, ' hrs ').replace(/M/g, ' mins ')}</p>
-                            <Link to='/results'><span className="material-icons icon-return">west</span></Link>
+            <section className='sm:container px-4 pb-10'>
+                <div className='container-small pt-6 sm:pt-16'>
+                    <div className='header-navigation'>
+                        <p>Duración: {itineraries[0].duration.split('PT')[1].replace(/H/g, ' hrs ').replace(/M/g, ' mins ')}</p>
+                        <Link to='/results'><span className="material-icons icon-return">west</span></Link>
+                    </div>
+                    <div className='card-flight-detail'>
+                        <div className='card-flight-detail__total'>
+                            <p><strong>{grandTotal} {currency}</strong></p>
                         </div>
-                        <div className='card-flight-detail'>
-                            <div className='card-flight-detail__total'>
-                                <p><strong>{grandTotal} {currency}</strong></p>
-                            </div>
-                            <div>
-                                {
-                                    itineraries[0].segments.map((item, idx) => (
-                                        <div key={idx} className='card-flight-detail__item'>
-                                            <ul>
-                                                <li>
-                                                    <div style={{ display: 'flex', alignItems: 'center' }}>
-                                                        <figure className='card-flight-detail__image'>
-                                                            <img src={renderIMAGECarrier(item.carrierCode)} alt={item.carrierCode} />
-                                                        </figure>
-                                                        <div style={{ display: 'flex', 'flex-wrap': 'wrap' }}>
-                                                            <div className='card-flight-detail__info'>
-                                                                <p><strong>{item.departure.iataCode}</strong></p>
-                                                                <p><small>{renderHTMLDepartureHour(item.departure.at)}</small></p>
-                                                                <p><small>{renderHTMLDate(item.departure.at)}</small></p>
-                                                            </div>
-                                                            <div className='card-flight-detail__split'>
-                                                                <div>
-                                                                    <span className="material-icons card-flight-detail__aircraft">local_airport</span>
-                                                                </div>
-                                                            </div>
-                                                            <div className='card-flight-detail__info'>
-                                                                <p><strong>{item.arrival.iataCode}</strong></p>
-                                                                <p><small>{renderHTMLArrivalHour(item.arrival.at)}</small></p>
-                                                                <p><small>{renderHTMLDate(item.arrival.at)}</small></p>
-                                                            </div>
-                                                            <div className='card-flight-detailt__numflight'>
-                                                                <small>
-                                                                    {item.number} Nro. de vuelo
-                                                                </small>
+                        <div>
+                            {
+                                itineraries[0].segments.map((item, idx) => (
+                                    <div key={idx} className='card-flight-detail__item'>
+                                        <ul>
+                                            <li>
+                                                <div style={{ display: 'flex', alignItems: 'center' }}>
+                                                    <figure className='card-flight-detail__image'>
+                                                        <img src={renderIMAGECarrier(item.carrierCode)} alt={item.carrierCode} />
+                                                    </figure>
+                                                    <div style={{ display: 'flex', 'flex-wrap': 'wrap' }}>
+                                                        <div className='card-flight-detail__info'>
+                                                            <p><strong>{item.departure.iataCode}</strong></p>
+                                                            <p><small>{renderHTMLDepartureHour(item.departure.at)}</small></p>
+                                                            <p><small>{renderHTMLDate(item.departure.at)}</small></p>
+                                                        </div>
+                                                        <div className='card-flight-detail__split'>
+                                                            <div>
+                                                                <span className="material-icons card-flight-detail__aircraft">local_airport</span>
                                                             </div>
                                                         </div>
+                                                        <div className='card-flight-detail__info'>
+                                                            <p><strong>{item.arrival.iataCode}</strong></p>
+                                                            <p><small>{renderHTMLArrivalHour(item.arrival.at)}</small></p>
+                                                            <p><small>{renderHTMLDate(item.arrival.at)}</small></p>
+                                                        </div>
+                                                        <div className='card-flight-detailt__numflight'>
+                                                            <small>
+                                                                {item.number} Nro. de vuelo
+                                                            </small>
+                                                        </div>
                                                     </div>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    ))
-                                }
-                            </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                ))
+                            }
                         </div>
                     </div>
                 </div>
             </section>
-        </>
+        </main>
     )
 }
 
