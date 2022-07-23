@@ -4,7 +4,7 @@ import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 import store from './redux/store';
 import './assets/styles/fonts.css'; // fonts
-// import './assets/styles/flatpickr.css'; // flatpickr
+import './assets/styles/flatpickr.css'; // flatpickr
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
