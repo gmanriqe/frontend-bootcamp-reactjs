@@ -9,7 +9,7 @@
 1. HTML5
 2. CSS3 (TAILWIND V3.1)
 3. REACTJS (JAVASCRIPT ES6)
-4. FIGMA (MOCKUP)
+4. FIGMA [Mockup](https://www.figma.com/file/Uhrn8A1aEJ6cMTy1l9mPfc/Bootcamp-ReactJS---Amadeus?node-id=0%3A1).
 
 ## TEMAS
 
