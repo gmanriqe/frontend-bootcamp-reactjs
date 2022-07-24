@@ -18,5 +18,5 @@
 - [ ] Hooks - reusable
 - [x] React Router V6
 - [x] Formik
-- [x] Fetch/Axios
+- [x] Fetch/Axios (API AMADEUS)
 - [x] Deployment in Vercel
