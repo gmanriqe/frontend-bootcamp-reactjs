@@ -1,6 +1,6 @@
 # BOOTCAMP - PROYECTO FINAL
 
-## DESARROLLADOR
+## INTEGRANTES
 
 - Jesús Alexander Gonzales Manrique **(Frontend Developer)**
 
