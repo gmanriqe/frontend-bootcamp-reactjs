@@ -27,8 +27,105 @@ const Results = () => {
         }, 25000)
     }
 
-    const handleFlightDetail = (id) => {
-        navigate(`/results/${id}`)
+    const renderHTMLDepartureHour = (value) => {
+        let date = new Date(value)
+        let dateDeparture = dayjs(date).format('HH:mm')
+        return `${dateDeparture}`
+    }
+
+    const renderHTMLDate = (value) => {
+        let date = new Date(value)
+        let dateArrival = dayjs(date).format('DD MMMM YYYY')
+        return `${dateArrival}`
+    }
+
+    const renderIMAGECarrier = (value) => {
+        return require(`../../assets/images/carriers/${value}.png`)
+    }
+
+    const removeClass = () => {
+        let resultItem = document.querySelectorAll('.card-flight.show')
+        resultItem.forEach((item) => {
+            item.classList.remove('show')
+        })
+    }
+
+    const deleteNodoDetalle = () => {
+        let nodoDetail = document.querySelectorAll('.card-flight-detailt')
+        nodoDetail.forEach((item) => {
+            item.remove()
+        })
+    }
+
+    const insertAfter = (elem, newNodo) => {
+        elem.parentNode.insertBefore(newNodo, elem.nextSibling)
+    }
+
+    const loadNodoDetail = (elem, data) => {
+        const { itineraries } = data[0]
+        const $newNodo = document.createElement('div')
+        $newNodo.classList.add('card-flight-detailt')
+
+        console.log(itineraries)
+        let html = `<div>`
+        itineraries[0].segments.map((item, idx) => (
+            html += `<div class='card-flight-detailt__item'>
+                <div class='card-flight-detailt__left flex'>
+                    <figure class='card-flight-detailt__image'>
+                        <img src="${renderIMAGECarrier(item.carrierCode)}" alt="${item.carrierCode}" />
+                    </figure>
+                    <div class='card-flight-detailt__row'>
+                        <div class='card-flight-detailt__info'>
+                            <div class='flex items-end'>
+                                <p>
+                                    <span class='card-flight-detailt__time'>${renderHTMLDepartureHour(item.departure.at)}</span>
+                                </p>
+                                <div class='card-flight-detailt__content-date'>
+                                    <strong>${item.departure.iataCode}</strong>
+                                    <small class='card-flight-detailt__date'>${renderHTMLDate(item.departure.at)}</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class='card-flight-detailt__info card-flight-detailt__info--transparent'>
+                            <div class='flex items-end'>
+                                <p>
+                                    <span class='card-flight-detailt__time'>${renderHTMLDepartureHour(item.arrival.at)}</span>
+                                </p>
+                                <div class='card-flight-detailt__content-date'>
+                                    <strong>${item.arrival.iataCode}</strong>
+                                    <small class='card-flight-detailt__date'>${renderHTMLDate(item.arrival.at)}</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>`
+        ))
+        html += `</div>`
+        html += `<div class='card-flight-detailt__bottom'>
+            <button type='button' class='btn btn-primary'>Reservar</button>
+        </div>`
+
+        $newNodo.innerHTML = html
+        insertAfter(elem, $newNodo)
+    }
+
+    const handleFlightDetail = (evt, id) => {
+        if (!evt.target.closest('.card-flight')) return
+
+        let selectedElem = evt.target.closest('.card-flight')
+        if (selectedElem.classList.value === 'card-flight') {
+            let dataFilter = stateFlight.filter(item => item.id === id)
+
+            deleteNodoDetalle()
+            removeClass()
+
+            selectedElem.classList.add('show')
+            loadNodoDetail(selectedElem, dataFilter)
+        } else if (selectedElem.classList.value === 'card-flight show') {
+            deleteNodoDetalle()
+            removeClass()
+        }
     }
 
     return (
@@ -53,14 +150,14 @@ const Results = () => {
                                                         <span className='material-icons'>local_airport</span>
                                                     </div>
                                                     <div className='card-flight__hours'>
-                                                        <p><strong>{item.numberOfBookableSeats} {Number(item.numberOfBookableSeats) === 1 ? 'Und.' : 'Unds.'} disponibles </strong></p>
-                                                        <small>{item.itineraries[0].duration.split('PT')[1].replace(/H/g, ' hrs ').replace(/M/g, ' mins ')} Duración</small>
-                                                        <small>{dayjs(new Date(item.lastTicketingDate)).format('DD MMMM YYYY')} Último día de reserva</small>
+                                                        <p><strong>{item.numberOfBookableSeats} {Number(item.numberOfBookableSeats) === 1 ? 'UND.' : 'UNDS.'} DISP. </strong></p>
+                                                        <small><strong>Duración: </strong>{item.itineraries[0].duration.split('PT')[1].replace(/H/g, ' hrs ').replace(/M/g, ' mins ')}</small>
+                                                        <small><strong>Fec. final de reserva: </strong>{dayjs(new Date(item.lastTicketingDate)).format('DD MMMM YYYY')}</small>
                                                     </div>
                                                 </div>
-                                                <div className='card-flight__luggage'> {item.oneWay === true ? '' : <span className="material-icons">no_luggage</span>} <span>{item.price.grandTotal} {item.price.currency}</span></div>
-                                                <button className='card-flight__dropdown' title="VER DETALLE" data-id={item.id} onClick={() => handleFlightDetail(item.id)}>
-                                                    <span className="material-icons">chevron_right</span>
+                                                <p className='card-flight__luggage'> {item.oneWay === true ? '' : <span className="material-icons">no_luggage</span>} <span>{item.price.grandTotal} {item.price.currency}</span></p>
+                                                <button className='card-flight__dropdown' title="VER DETALLE" data-id={item.id} onClick={(evt => handleFlightDetail(evt, item.id))}>
+                                                    <span className="material-icons">expand_less</span>
                                                 </button>
                                             </div>
                                         </li>

@@ -338,6 +338,7 @@ h6 {
   width: 100%;
 }
 /* btn search */
+.btn.btn-primary,
 .btn.btn-search {
   background-color: var(--blue-color);
   border: 1px solid var(--blue-color);
@@ -374,7 +375,6 @@ h6 {
 * List Flight
 **********************/
 .list-flight {
-  box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
   border-radius: 8px;
 }
 .list-flight.list-flight--widthout-shadow {
@@ -429,9 +429,13 @@ h6 {
 **********************/
 .card-flight {
   border: 1px solid var(--control-form-color);
-  padding: 8px 3rem 8px 8px;
+  padding: 8px 3rem 8px 0;
   position: relative;
   margin-bottom: -1px;
+}
+.card-flight.show .card-flight__dropdown .material-icons{
+    transform: rotate(180deg);
+    background-color: var(--control-form-color);
 }
 .card-flight__image {
   width: 68px;
@@ -440,7 +444,7 @@ h6 {
   align-items: center;
 }
 .card-flight__luggage {
-    text-align: center;
+  text-align: center;
   padding: 0 6px;
 }
 .card-flight__luggage .material-icons {
@@ -467,6 +471,7 @@ h6 {
   height: 40px;
   line-height: 40px;
   border-radius: 50%;
+  transition: transform 0.3s ease;
 }
 .card-flight__dropdown:hover .material-icons {
   background-color: var(--control-form-color);
@@ -485,7 +490,7 @@ h6 {
 }
 @media screen and (min-width: 640px) {
   .card-flight {
-    padding: 1rem 4rem 1rem 1rem;
+    padding: 1rem 4rem 1rem 0;
   }
 }
 
@@ -505,33 +510,12 @@ h6 {
   justify-content: space-between;
   align-items: center;
 }
-.card-flight-detail .card-flight-detail__image {
-  width: 100px;
-  align-self: flex-start;
-}
-.card-flight-detail .card-flight-detail__image img {
-  max-height: 20px;
-  margin-top: 4px;
-}
 .card-flight-detail .card-flight-detail__item {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   margin-bottom: 18px;
-}
-.card-flight-detail .card-flight-detail__split {
-  width: 120px;
-  padding: 10px;
-  display: flex;
-  align-items: center;
-}
-.card-flight-detail .card-flight-detail__split div {
-  background-color: var(--control-form-color);
-  display: block;
-  width: 100%;
-  height: 2px;
-  position: relative;
 }
 .card-flight-detail .card-flight-detail__aircraft {
   position: absolute;
@@ -543,13 +527,99 @@ h6 {
 .card-flight-detail .card-flight-detail__total {
   text-align: center;
 }
-.card-flight-detail .card-flight-detailt__numflight {
-  width: 100%;
-  font-size: 14px;
+
+/* /////// */
+.card-flight-detailt {
+  padding: 16px 16px;
+  border-left: 1px solid var(--control-form-color);
+  border-right: 1px solid var(--control-form-color);
 }
-.card-flight-detail .card-flight-detail__info p:nth-child(2),
-.card-flight-detail .card-flight-detail__info p:nth-child(3) {
+.card-flight-detailt .card-flight-detailt__time {
+  background-color: var(--icon-message-travel);
+  display: inline-block;
+  min-width: 52px;
+  font-size: 14px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  color: var(--white-color);
+  text-align: center;
+}
+.card-flight-detailt .card-flight-detailt__date {
+  display: block;
+}
+.card-flight-detailt .card-flight-detailt__image img {
+  max-height: 26px;
+}
+.card-flight-detailt .card-flight-detailt__info {
+  padding-left: 20px;
+  position: relative;
+}
+.card-flight-detailt .card-flight-detailt__info::before {
+  content: "";
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: var(--icon-message-travel);
+  position: absolute;
+  left: 5px;
+  top: 9px;
+}
+.card-flight-detailt .card-flight-detailt__item {
+  display: flex;
+}
+.card-flight-detailt
+  .card-flight-detailt__item:not(:last-child)
+  .card-flight-detailt__info::after {
+  content: "";
+  display: inline-block;
+  width: 1px;
+  height: calc(100% + 31px);
+  background-color: var(--icon-message-travel);
+  position: absolute;
+  left: 10px;
+  top: 10px;
+}
+.card-flight-detailt
+  .card-flight-detailt__item:not(:last-child)
+  .card-flight-detailt__row {
+  padding-bottom: 31px;
+}
+.card-flight-detailt .card-flight-detailt__row {
+  padding-left: 8px;
+  display: flex;
+}
+.card-flight-detailt .card-flight-detailt__info strong {
+  font-size: 14px;
   line-height: 16px;
+}
+.card-flight-detailt .card-flight-detailt__info small {
+  font-size: 9px;
+  line-height: 8px;
+}
+.card-flight-detailt .card-flight-detailt__content-date {
+  line-height: 12px;
+  padding-left: 6px;
+}
+.card-flight-detailt .card-flight-detailt__bottom {
+  padding-top: 15px;
+  display: flex;
+  justify-content: flex-end;
+}
+/* transparent */
+.card-flight-detailt
+  .card-flight-detailt__info.card-flight-detailt__info--transparent::before {
+  background-color: transparent;
+}
+.card-flight-detailt
+  .card-flight-detailt__item:not(:last-child)
+  .card-flight-detailt__info.card-flight-detailt__info--transparent::after {
+  background-color: transparent;
+}
+@media screen and (min-width: 640px) {
+  .card-flight-detailt .card-flight-detailt__row {
+    padding-left: 44px;
+  }
 }
 
 /**********************
