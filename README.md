@@ -1,4 +1,4 @@
-# PROYECTO FINAL - RESERVA DE VUELO (BOOTCAMP)
+# BOOTCAMP - PROYECTO FINAL
 
 ## DESARROLLADOR
 
@@ -9,14 +9,14 @@
 1. HTML5
 2. CSS3 (TAILWIND V3.1)
 3. REACTJS (JAVASCRIPT ES6)
-4. FIGMA [Mockup](https://www.figma.com/file/Uhrn8A1aEJ6cMTy1l9mPfc/Bootcamp-ReactJS---Amadeus?node-id=0%3A1).
+4. [FIGMA - DISEÑO MOCKUP](https://www.figma.com/proto/Uhrn8A1aEJ6cMTy1l9mPfc/Bootcamp-ReactJS---Amadeus?node-id=42%3A600&scaling=min-zoom&page-id=0%3A1&starting-point-node-id=42%3A600).
 
 ## TEMAS
 
-- [x] Use de bundler
+- [x] Uso de bundler
 - [x] Redux RTK - global state handler
 - [ ] Hooks - reusable
 - [x] React Router V6
 - [x] Formik
 - [x] Fetch/Axios
-- [ ] Deployment clouds server
+- [x] Deployment in Vercel
