@@ -31,7 +31,6 @@ export const fetchFlightError = (error) => ({
 // Me genera error al importarlo desde el onSubmit del Formik
 /*
 export const fecthFlightDetail = (valores, token) => (dispatch) => {
-    console.log(valores, token)
     const navigate = useNavigate()
 
     dispatch(fetchFlightStart())
@@ -56,7 +55,6 @@ export const fecthFlightDetail = (valores, token) => (dispatch) => {
         })
         .catch(function (error) {
             fetchFlightError(error)
-            console.log(error)
         })
         .finally(() => console.log('finally'));
 }

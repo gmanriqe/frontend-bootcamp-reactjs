@@ -15,24 +15,20 @@ const initialState = {
 }
 
 const resultsReducer = (state = initialState, action) => {
-    // console.log('resultsReducer', action)
     switch (action.type) {
         case FETCH_FLIGHT_START:
-            // console.log({...state, isLoading: true, data: []})
             return { 
                 ...state, 
                 isLoading: true, 
                 data: []
             }
         case FETCH_FLIGHT_COMPLETE:
-            // console.log({...state, isLoading: false, data: action.payload})
             return { 
                 ...state, 
                 isLoading: false, 
                 data: action.payload
             }
         case FETCH_FLIGHT_ERROR:
-            // console.log({...state, isLoading: false, error: action.error})
             return { 
                 ...state, 
                 isLoading: false, 

@@ -3,28 +3,42 @@ import { useNavigate, Link } from "react-router-dom";
 // DAYJS
 import dayjs from 'dayjs';
 import es from 'dayjs/locale/es'
+// RTK
+import { useSelector } from "react-redux";
+// SweetAlert
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content';
 
 // 2do: Paquetes de mi propio proyecto
 import { Header } from '../../components/Header';
 import { Banner } from "../../components/Banner";
 import stateError from '../../assets/images/results_0.svg'
 
-// RTK
-import { useSelector } from "react-redux";
-
 dayjs.locale('es');
+const MySwal = withReactContent(Swal);
 const Results = () => {
+    
     const navigate = useNavigate()
-
     const stateFlight = useSelector(state => state.results.data);
-    const isLoading = useSelector(state => state.results.isLoading);
-
-    console.log(isLoading)
 
     if (stateFlight.length === 0) {
         setTimeout(() => {
             navigate('/')
         }, 25000)
+    }
+
+    const handleReserve = (elem, id) => {
+        MySwal.fire({
+            text: `ID = ${id}. Gracias por haber llegado hasta aquí.`,
+            icon: 'warning',
+            confirmButtonText: 'OK',
+            showCloseButton: true, // icon cerrar
+            allowOutsideClick: false, // click afuera no cierra
+            allowEscapeKey: true, // keyup esc cierra
+            customClass: { // nueva clase en el moda
+                container: 'swal-content',
+            },
+        }).then((result) => {})
     }
 
     const renderHTMLDepartureHour = (value) => {
@@ -62,11 +76,10 @@ const Results = () => {
     }
 
     const loadNodoDetail = (elem, data) => {
-        const { itineraries } = data[0]
+        const { itineraries, id } = data[0]
         const $newNodo = document.createElement('div')
         $newNodo.classList.add('card-flight-detailt')
 
-        console.log(itineraries)
         let html = `<div>`
         itineraries[0].segments.map((item, idx) => (
             html += `<div class='card-flight-detailt__item'>
@@ -103,7 +116,7 @@ const Results = () => {
         ))
         html += `</div>`
         html += `<div class='card-flight-detailt__bottom'>
-            <button type='button' class='btn btn-primary'>Reservar</button>
+            <button type='button' class='btn btn-primary' onclick='handleReserve(e=this, ${id})'>Reservar</button>
         </div>`
 
         $newNodo.innerHTML = html
@@ -127,6 +140,8 @@ const Results = () => {
             removeClass()
         }
     }
+
+    window.handleReserve = handleReserve;
 
     return (
         <>

@@ -5,9 +5,7 @@ import dayjs from 'dayjs'; // dayjs
 import { Spanish } from 'flatpickr/dist/l10n/es.js'; // configure language for flatpickr
 import { useCallback, useEffect, useState } from 'react';
 import { Formik, Form } from 'formik';
-
 import { useNavigate } from 'react-router-dom';
-
 // RTK
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchFlightStart, fetchFlightComplete, fetchFlightError } from '../../../redux/actions/results';
@@ -15,6 +13,8 @@ import { fetchFlightStart, fetchFlightComplete, fetchFlightError } from '../../.
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import sortArrayForName from '../../../utils/sortArrayForName';
+
+// 2do: Paquetes de mi propio proyecto
 
 const MySwal = withReactContent(Swal);
 const MainFormSearch = ({ token }) => {
