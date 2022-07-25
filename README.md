@@ -1,6 +1,6 @@
 # BOOTCAMP - PROYECTO FINAL
 
-## INTEGRANTES
+## PARTICIPANTE
 
 - Jesús Alexander Gonzales Manrique **(Frontend Developer)**
 
@@ -20,3 +20,8 @@
 - [x] Formik
 - [x] Fetch/Axios (API AMADEUS)
 - [x] Deployment in Vercel
+
+## EJECUTAR EL PROYECTO
+
+1. DESCARGAR EL PROYECTO DESDE GITHUB
+2. EJECUTAR EN CONSOLA: npm start
