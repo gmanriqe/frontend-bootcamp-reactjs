@@ -1,17 +1,39 @@
-# BOOTCAMP - PROYECTO FINAL
+## PROYECTO FINAL - BOOTCAMP DE REACTJS
 
-## PARTICIPANTE
+<img src="https://raw.githubusercontent.com/gmanriqe/frontend-bootcamp-reactjs/master/src/assets/images/readme/banner_readme.png" alt="Bootcamp ReactJS en Código Facilito" />
+
+### PARTICIPANTE
 
 - Jesús Alexander Gonzales Manrique **(Frontend Developer)**
 
-## TECNOLOGÍAS
+## INTRODUCCIÓN
+
+- Búsqueda de vuelos, es una SPA (single page application), creada con las técnologías: HTML5, CSS3 (Tailwind v3.1), JAVASCRIPT y REACTJS V18, que ayudará al usuario a encontrar disponibilidad en la *busqueda de vuelos* a partir de una fecha determinada.
+
+### OBJETIVO
+
+- Este proyecto se desarrolla como desafío al finalizar el Bootcamp, emplendo los diferentes conocimientos adquiridos en el transcurso de las +12 semanas de aprendizaje.
+
+### DEMOSTRACIÓN
+
+- Veamos rapidamente como funciona esta aplicación web.
+- [Búsqueda de vuelos](https://bootcamp-flight-offers-search.vercel.app/)
+
+### PROCESO DE DESARROLLO
+
+1. Análisis.
+2. Diseño.
+3. Desarrollo.
+4. Prueba.
+
+### TECNOLOGÍAS
 
 1. HTML5
 2. CSS3 (TAILWIND V3.1)
 3. REACTJS (JAVASCRIPT ES6)
 4. [FIGMA - DISEÑO MOCKUP](https://www.figma.com/proto/Uhrn8A1aEJ6cMTy1l9mPfc/Bootcamp-ReactJS---Amadeus?node-id=42%3A600&scaling=min-zoom&page-id=0%3A1&starting-point-node-id=42%3A600).
 
-## TEMAS
+### TEMAS
 
 - [x] Uso de bundler
 - [x] Redux RTK - global state handler
@@ -23,5 +45,6 @@
 
 ## EJECUTAR EL PROYECTO
 
-1. DESCARGAR EL PROYECTO DESDE GITHUB
-2. EJECUTAR EN CONSOLA: npm start
+1. Descargar el proyecto desde Github
+2. Instalar los paquetes
+3. Ejecutar desde la consola: npm start
